@@ -5,6 +5,7 @@
 #include <queue>
 #include <stack>
 #include <vector>
+#include <functional>
 
 
 using namespace std;
@@ -37,8 +38,8 @@ public:
     BinaryTree() : root(nullptr) {}
     ~BinaryTree() {}
     void add_iter(int item);
-    TreeNode* add_recur1();
-    TreeNode* add_recur2(vector<int>& item);
+    void add_recur1();
+    void add_recur2(vector<int>& item);
     void breadth_travel();
     void pre_order();
     void pre_order1();
@@ -52,5 +53,4 @@ public:
 private:
     TreeNode* root;
 };
-
 #endif

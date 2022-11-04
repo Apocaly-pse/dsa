@@ -2,34 +2,40 @@
 
 
 // 递归版本生成二叉树(需要捕获用户输入)
-TreeNode* BinaryTree::add_recur1() {
-    int data;
-    cin >> data;
-    if (data < 0) { return nullptr; }
-    TreeNode* node = new TreeNode(data);
-    node->val = data;
-    node->left = BinaryTree::add_recur1();
-    node->right = BinaryTree::add_recur1();
-    return node;
+void BinaryTree::add_recur1() {
+    function<TreeNode*(void)> f = [&](void) {
+        int data;
+        cin >> data;
+        if (data == 0) { return (TreeNode*)nullptr; }
+        TreeNode* node = new TreeNode(data);
+        node->val = data;
+        node->left = f();
+        node->right = f();
+        return node;
+    };
+    root = f();
 }
 
 // 递归生成二叉树: 直接遍历外部数组实现
-TreeNode* BinaryTree::add_recur2(vector<int>& item) {
-    if (item.empty() || item.front() == 0) {
+void BinaryTree::add_recur2(vector<int>& item) {
+    function<TreeNode*(void)> f = [&](void) {
+        if (item.empty() || item.front() == 0) {
+            item.erase(item.begin());
+            return (TreeNode*)nullptr;
+        }
+        TreeNode* node = new TreeNode(item.front());
+        node->val = item.front();
         item.erase(item.begin());
-        return nullptr;
-    }
-    TreeNode* node = new TreeNode(item.front());
-    node->val = item.front();
-    item.erase(item.begin());
-    node->left = BinaryTree::add_recur2(item);
-    node->right = BinaryTree::add_recur2(item);
-    return node;
+        node->left = f();
+        node->right = f();
+        return node;
+    };
+    root = f();
 }
 
 
 void BinaryTree::add_iter(int item) {
-    TreeNode* node = new TreeNode(item); //节点需要创建在堆区
+    TreeNode* node = new TreeNode(item);
 
     if (!root) {
         root = node;
@@ -208,10 +214,10 @@ void BinaryTree::post_order2() {
 int main(int argc, char const* argv[]) {
     BinaryTree tree;
     // 第一种生成方式, 层序生成(使用队列进行循环)
-    for (int i = 1; i < 8; ++i) { tree.add_iter(i); }
+    // for (int i = 1; i < 8; ++i) { tree.add_iter(i); }
 
     // // 第二种生成方式, 递归生成(前序递归), 需要传入用户输入
-    // TreeNode* root = tree.add_recur1();
+    tree.add_recur1();
 
     // // 第三种(同第二种), 递归生成, 直接读取数组即可
     // vector<int> arr = {1, 2, 0, 4, 0, 0, 3, 0, 5, 0, 0};
@@ -219,7 +225,7 @@ int main(int argc, char const* argv[]) {
     // vector<int> arr = {1, 2, 4, 0, 0, 5, 0, 0, 3, 6, 0, 0, 7, 0, 0};
     // vector<int> arr = {1, 2, 0, 5, 0, 0, 3, 0, 0};
 
-    // auto root = tree.add_recur2(arr);
+    // tree.add_recur2(arr);
 
     // 下面是遍历
     // 广度遍历

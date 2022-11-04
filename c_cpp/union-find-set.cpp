@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#define MAXN 10000
+const int MAXN = 10000;
 
 using namespace std;
 

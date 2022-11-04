@@ -176,7 +176,7 @@ class BinaryTree(object):
         """中序遍历(左中右), 需要指针(由于遍历的节点顺序和处理的节点顺序不同)"""
         st = []
         result_arr = []
-        cur_node = self.root
+        cur_node = self.root  # 这里用指针是防止根节点被改变影响之后的操作
         while cur_node or st:
             if cur_node:
                 # 利用指针访问结点,访问到最底层数据
