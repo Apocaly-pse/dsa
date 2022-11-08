@@ -1,5 +1,58 @@
-#include "ll.h"
+#ifndef Linked_List
+#define Linked_List
 #include <iostream>
+#include <vector>
+
+
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next1) : val(x), next(next1) {}
+};
+
+ostream& operator<<(ostream& os, ListNode* lp);
+
+class LinkedList {
+public:
+    LinkedList() : head(nullptr) {}
+    LinkedList(int head_val) : head(new ListNode(head_val)) {}
+    LinkedList(int head_val, vector<int> rest);
+    LinkedList(vector<int> nodes);
+    ~LinkedList();
+
+    void print();
+    ListNode* first();
+    ListNode* last();
+    int len();
+
+    // visit by pos
+    /* int& operator[](int pos); */
+    ListNode* operator[](int pos);
+    ListNode* visit(int pos);
+
+    // insert by pos
+    void insert(int pos, int val);
+    void append(int val);
+    void add2head(int val);
+
+    // delete by pos
+    void pop(int pos);
+    void pop_back();
+    void pop_front();
+    // delete by value
+    void remove(int val, int cnt = 1);           // delete val cnt times
+    void modify(int val, int node, int cnt = 1); // modify val->node cnt times
+    int find(int node);                          // not found:-1
+
+
+private:
+    ListNode* head;
+};
+
 
 ostream& operator<<(ostream& os, ListNode* lp) {
     if (lp == nullptr) return os << "∅" << endl;
@@ -30,6 +83,16 @@ LinkedList::LinkedList(vector<int> nodes) {
         cur->next = new ListNode(*i);
         cur = cur->next;
     }
+}
+
+LinkedList::~LinkedList() {
+    ListNode* cur;
+    while (head->next) {
+        cur = head->next;
+        delete head;
+        head = cur;
+    }
+    delete head;
 }
 
 void LinkedList::print() { cout << head; }
@@ -156,7 +219,7 @@ void LinkedList::remove(int val, int cnt) {
     do {
         if ((idx = find(val)) == -1) {
             cout << "can not find val " << val << " to delete\n";
-            return;
+            break;
         } else
             pop(idx);
     } while (--cnt);
@@ -168,57 +231,11 @@ void LinkedList::modify(int val, int node, int cnt) {
     do {
         if ((idx = find(val)) == -1) {
             cout << "can not find val " << val << " to modify\n";
-            return;
+            break;
         } else {
             /* visit(idx)->val = node; */
             (*this)[idx]->val = node;
         }
     } while (--cnt);
 }
-
-
-// === test func === ===//
-void test_ctor() {
-    LinkedList ll1(12);
-    ll1.print();
-
-    LinkedList ll2(1, {2, 3, 4});
-    ll2.print();
-
-    LinkedList ll3({1, 2, 3, 4});
-    ll3.print();
-    /*
-       12 -> ∅
-        1 -> 2 -> 3 -> 4 -> ∅
-        1 -> 2 -> 3 -> 4 -> ∅
-    */
-}
-
-void test_func() {
-    LinkedList ll1({1, 2, 3, 4});
-    /* LinkedList ll1({1, 2}); */
-    /* LinkedList ll1; */
-    cout << "ll1=";
-    ll1.print();
-    cout << "len(ll1)=" << ll1.len() << endl;
-    /* cout << ll1.first()->val << endl; */
-    /* cout << ll1.last()->val << endl; */
-    /* ll1.append(5); */
-    /* ll1.pop(0); */
-    /* ll1.pop_back(); */
-    /* ll1.insert(4, 12); */
-    /* ll1.add2head(9); */
-    /* cout << "ll1.find(2):" << ll1.find(2) << endl; */
-    /* cout << "ll1.find(12):" << ll1.find(12) << endl; */
-    ll1.append(1);
-    /* ll1.remove(1, 3); */
-    cout << "ll1[0]=" << ll1[0]->val << endl;
-    /* cout << "ll1[9]=" << ll1[9] << endl; */
-    ll1.modify(1, 11, 3);
-    ll1.print();
-}
-int main(int argc, char* argv[]) {
-    /* test_ctor(); */
-    test_func();
-    return 0;
-}
+#endif // !LinkedList
