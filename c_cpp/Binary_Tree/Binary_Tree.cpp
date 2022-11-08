@@ -81,6 +81,8 @@ void BinaryTree::breadth_travel() {
     cout << ret << endl;
 }
 
+/********** pre order **********/
+
 void BinaryTree::pre_order() {
     vector<int> ret;
     auto recur_0 = [&ret](auto&& self, TreeNode* node) {
@@ -108,6 +110,28 @@ void BinaryTree::pre_order1() {
 
     cout << ret << endl;
 }
+void BinaryTree::pre_order2() {
+    vector<int> ret{};
+    stack<pair<int, TreeNode*>> st;
+    if (root) st.push(make_pair(0, root));
+    int color;
+    TreeNode* node;
+    while (!st.empty()) {
+        auto [color, node] = st.top();
+        st.pop();
+        if (node == nullptr) continue;
+        if (color == 0) {
+            st.push(make_pair(0, node->right));
+            st.push(make_pair(0, node->left));
+            st.push(make_pair(1, node));
+        } else {
+            ret.push_back(node->val);
+        }
+    }
+    cout << ret << endl;
+}
+
+/********** in order **********/
 
 void BinaryTree::in_order() {
     vector<int> ret;
@@ -126,7 +150,7 @@ void BinaryTree::in_order1() {
     vector<int> ret;
     stack<TreeNode*> st;
     auto cur = root;
-    while (cur || !st.empty()) {
+    while (!st.empty() || cur) {
         if (cur) {
             st.push(cur);
             cur = cur->left;
@@ -161,6 +185,29 @@ void BinaryTree::in_order2() {
     cout << ret << endl;
 }
 
+void BinaryTree::in_order3() {
+    vector<int> ret{};
+    stack<pair<int, TreeNode*>> st;
+    if (root) st.push(make_pair(0, root));
+    int color;
+    TreeNode* node;
+    while (!st.empty()) {
+        auto [color, node] = st.top();
+        st.pop();
+        if (node == nullptr) continue;
+        if (color == 0) {
+            st.push(make_pair(0, node->right));
+            st.push(make_pair(1, node));
+            st.push(make_pair(0, node->left));
+        } else {
+            ret.push_back(node->val);
+        }
+    }
+    cout << ret << endl;
+}
+
+/********** post order **********/
+
 void BinaryTree::post_order() {
     vector<int> ret;
     auto recur_2 = [&ret](auto&& self, TreeNode* node) {
@@ -185,11 +232,13 @@ void BinaryTree::post_order1() {
         if (node->left) st.push(node->left);
         if (node->right) st.push(node->right);
     }
-    // 进行逆序操作: 或者用iterator的逆序算法
-    vector<int> ret1;
-    for (auto it = ret.rbegin(); it != ret.rend(); it++) ret1.push_back(*it);
+    // 进行逆序操作: 或者采用逆序算法
+    // vector<int> ret1;
+    // for (auto it = ret.rbegin(); it != ret.rend(); it++)
+    // ret1.push_back(*it);
+    reverse(ret.begin(), ret.end());
 
-    cout << ret1 << endl;
+    cout << ret << endl;
 }
 
 void BinaryTree::post_order2() {
@@ -211,20 +260,60 @@ void BinaryTree::post_order2() {
     cout << ret << endl;
 }
 
+void BinaryTree::post_order3() {
+    stack<TreeNode*> st;
+    vector<int> ret;
+    TreeNode* node = root;
+    while (!st.empty() || node) {
+        if (node) {
+            ret.push_back(node->val);
+            if (node->left) st.push(node->left);
+            node = node->right;
+        } else {
+            node = st.top();
+            st.pop();
+        }
+    }
+    reverse(ret.begin(), ret.end());
+
+    cout << ret << endl;
+}
+
+void BinaryTree::post_order4() {
+    vector<int> ret{};
+    stack<pair<int, TreeNode*>> st;
+    if (root) st.push(make_pair(0, root));
+    int color;
+    TreeNode* node;
+    while (!st.empty()) {
+        auto [color, node] = st.top();
+        st.pop();
+        if (node == nullptr) continue;
+        if (color == 0) {
+            st.push(make_pair(1, node));
+            st.push(make_pair(0, node->right));
+            st.push(make_pair(0, node->left));
+        } else {
+            ret.push_back(node->val);
+        }
+    }
+    cout << ret << endl;
+}
+
+
 int main(int argc, char const* argv[]) {
     BinaryTree tree;
     // 第一种生成方式, 层序生成(使用队列进行循环)
-    // for (int i = 1; i < 8; ++i) { tree.add_iter(i); }
+    for (int i = 1; i < 8; ++i) { tree.add_iter(i); }
 
     // // 第二种生成方式, 递归生成(前序递归), 需要传入用户输入
-    tree.add_recur1();
+    // tree.add_recur1();
 
     // // 第三种(同第二种), 递归生成, 直接读取数组即可
     // vector<int> arr = {1, 2, 0, 4, 0, 0, 3, 0, 5, 0, 0};
     // vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 0, 0, 0, 0, 0, 0, 0, 0};
     // vector<int> arr = {1, 2, 4, 0, 0, 5, 0, 0, 3, 6, 0, 0, 7, 0, 0};
     // vector<int> arr = {1, 2, 0, 5, 0, 0, 3, 0, 0};
-
     // tree.add_recur2(arr);
 
     // 下面是遍历
@@ -236,8 +325,10 @@ int main(int argc, char const* argv[]) {
     cout << "\npre_order_recur:\n";
     tree.pre_order();
     // 前序遍历(循环)
-    cout << "pre_order_iter:\n";
+    cout << "pre_order_iter1:\n";
     tree.pre_order1();
+    cout << "pre_order_iter2:\n";
+    tree.pre_order2();
 
     // 中序遍历(递归)
     cout << "\nin_order_recur:\n";
@@ -247,6 +338,8 @@ int main(int argc, char const* argv[]) {
     tree.in_order1();
     cout << "in_order_iter2:\n";
     tree.in_order2();
+    cout << "in_order_iter3:\n";
+    tree.in_order3();
 
     // 后序遍历(递归)
     cout << "\npost_order_recur:\n";
@@ -256,6 +349,10 @@ int main(int argc, char const* argv[]) {
     tree.post_order1();
     cout << "post_order_iter2:\n";
     tree.post_order2();
+    cout << "post_order_iter3:\n";
+    tree.post_order3();
+    cout << "post_order_iter4:\n";
+    tree.post_order4();
     return 0;
     /*
 breadth_travel:
@@ -263,7 +360,9 @@ breadth_travel:
 
 pre_order_recur:
 [1, 2, 4, 5, 3, 6, 7]
-pre_order_iter:
+pre_order_iter1:
+[1, 2, 4, 5, 3, 6, 7]
+pre_order_iter2:
 [1, 2, 4, 5, 3, 6, 7]
 
 in_order_recur:
@@ -272,12 +371,18 @@ in_order_iter1:
 [4, 2, 5, 1, 6, 3, 7]
 in_order_iter2:
 [4, 2, 5, 1, 6, 3, 7]
+in_order_iter3:
+[4, 2, 5, 1, 6, 3, 7]
 
 post_order_recur:
 [4, 5, 2, 6, 7, 3, 1]
 post_order_iter1:
 [4, 5, 2, 6, 7, 3, 1]
 post_order_iter2:
+[4, 5, 2, 6, 7, 3, 1]
+post_order_iter3:
+[4, 5, 2, 6, 7, 3, 1]
+post_order_iter4:
 [4, 5, 2, 6, 7, 3, 1]
     */
 }
