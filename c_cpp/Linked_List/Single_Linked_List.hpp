@@ -142,6 +142,7 @@ ListNode* LinkedList::operator[](int pos) {
     while (pos--) cur = cur->next;
     return cur;
 }
+
 ListNode* LinkedList::visit(int pos) {
     if (head == nullptr) {
         cerr << "Attempt to get value from a NULL LinkedList\n";

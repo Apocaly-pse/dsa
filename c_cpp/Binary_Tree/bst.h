@@ -1,5 +1,5 @@
-#ifndef BTREE
-#define BTREE
+#ifndef BSTREE
+#define BSTREE
 
 #include <iostream>
 #include <queue>
@@ -28,15 +28,15 @@ struct TreeNode {
 
     TreeNode() : val(0), left(nullptr), right(nullptr) {}
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode* left1, TreeNode* right1)
-        : val(x), left(left1), right(right1) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right)
+        : val(x), left(left), right(right) {}
 };
 
 
 class BinaryTree {
 public:
     BinaryTree() : root(nullptr) {}
-    ~BinaryTree();
+    ~BinaryTree() {}
     // 树的生成
     void add_iter(int item); // 迭代方式生成树(广度遍历逆操作)
     void add_recur1();       // 递归捕获用户输入方式
@@ -46,25 +46,17 @@ public:
     void pre_order();      // 前序(递归)
     void pre_order1();     // 迭代
     void pre_order2();     // 迭代(通解)
-    void pre_order3();     // 迭代(通解1)
-    void morris_preorder();
-    void morris_preorder1();
 
     void in_order();  // 中序(递归
     void in_order1(); // 迭代(指针)
     void in_order2(); // 迭代(通解)
     void in_order3(); // 迭代(通解)
-    void morris_inorder();
-    void morris_inorder1();
 
     void post_order();  // 后序(递归)
     void post_order1(); // 从前序得到
-    void post_order2();
-    void post_order3();
+    void post_order2(); // 通解
+    void post_order3(); // 通解
     void post_order4(); // 通解
-    void post_order5(); // 通解
-    void morris_postorder();
-    void morris_postorder1();
 
 private:
     TreeNode* root;

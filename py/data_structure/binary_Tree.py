@@ -1,4 +1,5 @@
 from collections import deque
+
 # 首先定义树的根节点
 
 
@@ -45,8 +46,7 @@ class BinaryTree(object):
                 queue.append(cur_node.right)
 
     def breadth_travel(self):
-        """广度遍历: 方法同add, 是一种反过来的操作
-        """
+        """广度遍历: 方法同add, 是一种反过来的操作"""
         # 使用队列
         queue = [self.root]
         ret = []
@@ -64,8 +64,7 @@ class BinaryTree(object):
         print(ret)
 
     def breadth_travel1(self):
-        """广度遍历: 方法同add, 是一种反过来的操作
-        """
+        """广度遍历: 方法同add, 是一种反过来的操作"""
         # 使用队列
         q = [self.root]
         if self.root is None:
@@ -83,8 +82,7 @@ class BinaryTree(object):
             level += 1
 
     def breadth_travel2(self):
-        """广度遍历: 方法同add, 是一种反过来的操作
-        """
+        """广度遍历: 方法同add, 是一种反过来的操作"""
         # 使用队列
         q = deque([self.root])
         if self.root is None:
@@ -114,6 +112,7 @@ class BinaryTree(object):
                 ret.append(node.val)
                 recur_0(node.left)
                 recur_0(node.right)
+
         recur_0(self.root)
         print(ret)
 
@@ -131,6 +130,7 @@ class BinaryTree(object):
                 recur_1(node.left)
                 ret.append(node.val)
                 recur_1(node.right)
+
         recur_1(self.root)
         print(ret)
 
@@ -149,6 +149,7 @@ class BinaryTree(object):
                 recur_2(node.left)
                 recur_2(node.right)
                 ret.append(node.val)
+
         recur_2(self.root)
         print(ret)
 
@@ -280,8 +281,49 @@ class BinaryTree(object):
             node = st[-1].right if st and st[-1].left == node else None
         print(result_arr)
 
+    def print_Tree(self):
+        # m:层数
+        # n:列数
+        q = deque([self.root])
+        m = 0
+        while q:
+            for _ in range(len(q)):
+                cur = q.popleft()
+                # if not (cur.left or cur.right): continue
+                if cur.left:
+                    q.append(cur.left)
+                if cur.right:
+                    q.append(cur.right)
+            m += 1
+        n = (1 << m) - 1
+        ans = [[" "] * n for _ in range(m)]
+        branch = [[" "] * n for _ in range(m)]
+        bq = deque([[0, (n - 1) // 2, self.root, ""]])
+        while bq:
+            for _ in range(len(bq)):
+                r, c, cur, slash = bq.popleft()
+                if cur.val is None:
+                    continue
+                ans[r][c] = str(cur.val)
+                # 叶结点不能对斜杠/反斜杠进行移动
+                if r == m - 1:
+                    branch[r][c] = slash
+                else:
+                    if slash == "/":
+                        branch[r][c + 1] = slash
+                    else:
+                        branch[r][c - 1] = slash
+                if cur.left:
+                    bq.append([r + 1, c - 2 ** (m - r - 2), cur.left, "/"])
+                if cur.right:
+                    bq.append([r + 1, c + 2 ** (m - r - 2), cur.right, "\\"])
 
-if __name__ == '__main__':
+        for i in range(m):
+            print("".join(branch[i]))
+            print("".join(ans[i]))
+
+
+if __name__ == "__main__":
     tree = BinaryTree()
     # for i in [63909, 43838, 4549, -31714, -99701, -96320, 88666, 75152,
     #           -14750, -12671, 60405, None, 29388, None, None, None,
@@ -289,42 +331,46 @@ if __name__ == '__main__':
     #           None, None, None, None, None, None, None, None, None,
     #           -36061, 91438, -75550]:
     #     tree.add(i)
-    # for i in [1, None, 2, None, 3, 4, 5]:
-    #     tree.add(i)
-    for i in range(1, 8):
+    for i in [1, None, 2, None, 3, 4, 5]:
         tree.add(i)
-    print("广度遍历0: ")
-    tree.breadth_travel()
+    # for i in range(25):
+    #     tree.add(chr(97 + i))
+
+    tree.print_Tree()
+    # for i in range(1, 8):
+    # tree.add(i)
+    # print("广度遍历0: ")
+    # tree.breadth_travel()
     print("广度遍历1: ")
     tree.breadth_travel1()
-    print("广度遍历2: ")
-    tree.breadth_travel2()
+    # print("广度遍历2: ")
+    # tree.breadth_travel2()
 
     print("\n深度遍历: ")
     print("前序遍历: 递归")
     tree.pre_order()
-    print("前序遍历: 非递归")
-    tree.pre_order_1()
+    # print("前序遍历: 非递归")
+    # tree.pre_order_1()
 
     print()
     print("中序遍历: 递归")
     tree.in_order()
-    print("中序遍历: 非递归, 用指针")
-    tree.in_order_1()
-    print("中序遍历: 非递归, 不需要指针")
-    tree.in_order_2()
-    print("中序遍历: 非递归, 颜色标记法")
-    tree.in_order_3()
-    print("中序遍历: 非递归, 颜色标记法(改进)")
-    tree.in_order_4()
+    # print("中序遍历: 非递归, 用指针")
+    # tree.in_order_1()
+    # print("中序遍历: 非递归, 不需要指针")
+    # tree.in_order_2()
+    # print("中序遍历: 非递归, 颜色标记法")
+    # tree.in_order_3()
+    # print("中序遍历: 非递归, 颜色标记法(改进)")
+    # tree.in_order_4()
 
     print()
     print("后序遍历: 递归")
     tree.post_order()
-    print("后序遍历: 非递归, 修改自前序")
-    tree.post_order_1()
-    print("后序遍历: 非递归, 直接写")
-    tree.post_order_2()
+    # print("后序遍历: 非递归, 修改自前序")
+    # tree.post_order_1()
+    # print("后序遍历: 非递归, 直接写")
+    # tree.post_order_2()
 
 """
 广度遍历: 

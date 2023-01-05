@@ -1,4 +1,5 @@
 from collections import deque
+
 # 首先定义树的根节点
 
 
@@ -10,9 +11,8 @@ class Node(object):
         self.left = left
         self.right = right
 
+
 # 定义一棵二叉树
-
-
 class BinarySearchTree(object):
     """docstring for BinaryTree"""
 
@@ -46,8 +46,7 @@ class BinarySearchTree(object):
                 queue.append(cur_node.right)
 
     def breadth_travel(self):
-        """广度遍历: 方法同add, 是一种反过来的操作
-        """
+        """广度遍历: 方法同add, 是一种反过来的操作"""
         # 使用队列
         queue = [self.root]
         ret = []
@@ -65,8 +64,7 @@ class BinarySearchTree(object):
         print(ret)
 
     def breadth_travel1(self):
-        """广度遍历: 方法同add, 是一种反过来的操作
-        """
+        """广度遍历: 方法同add, 是一种反过来的操作"""
         # 使用队列
         q = [self.root]
         if self.root is None:
@@ -84,8 +82,7 @@ class BinarySearchTree(object):
             level += 1
 
     def breadth_travel2(self):
-        """广度遍历: 方法同add, 是一种反过来的操作
-        """
+        """广度遍历: 方法同add, 是一种反过来的操作"""
         # 使用队列
         q = deque([self.root])
         if self.root is None:
@@ -115,6 +112,7 @@ class BinarySearchTree(object):
                 ret.append(node.val)
                 recur_0(node.left)
                 recur_0(node.right)
+
         recur_0(node)
         print(ret)
 
@@ -132,6 +130,7 @@ class BinarySearchTree(object):
                 recur_1(node.left)
                 ret.append(node.val)
                 recur_1(node.right)
+
         recur_1(node)
         print(ret)
 
@@ -150,6 +149,7 @@ class BinarySearchTree(object):
                 recur(node.left)
                 recur(node.right)
                 ret.append(node.val)
+
         recur(node)
         print(ret)
 
