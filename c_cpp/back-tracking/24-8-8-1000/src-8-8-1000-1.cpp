@@ -10,7 +10,9 @@
 #include <cmath>
 #include <map>
 #include <set>
+#include <chrono>
 using namespace std;
+using namespace chrono;
 
 const double EPS = 1e-6;
 const int NUM = 8;
@@ -36,7 +38,7 @@ bool dfs(int n) {
     map<int, int> hash;
     hash.clear();
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n - 1; i++)
         for (int j = i + 1; j < n; j++) {
             times++;
             // 保存状态（操作数i,j）
@@ -109,17 +111,23 @@ bool dfs(int n) {
 int main() {
     for (int i = 0; i < NUM; i++) {
         A[i] = 8;
-        char c[10];
-        sprintf(c, "%.0f", A[i]);
-        res_str[i] = c;
+        /* char c[10]; */
+        /* sprintf(c, "%.0f", A[i]); */
+        res_str[i] = to_string((int)A[i]);
     }
     cout << "start searching...." << endl;
-    clock_t start = clock();
+
+    auto start = system_clock::now();
+
     dfs(NUM);
-    for (it = ans.begin(); it != ans.end(); it++) { cout << *it << endl; }
-    clock_t duration = clock() - start;
+    for (it = ans.begin(); it != ans.end(); it++) cout << *it << endl;
+
+    auto end = system_clock::now();
+    auto duration = duration_cast<microseconds>(end - start);
+    cout << "Time spent: "
+         << double(duration.count()) * microseconds::period::num << "ms"
+         << endl;
     cout << "found : " << ans.size() << " expressions!" << endl;
-    cout << "spend : " << duration / 1000 << " ms" << endl;
 }
 /*
 ((((((8*8)*8)-8)*(8+8))/8)-8)
