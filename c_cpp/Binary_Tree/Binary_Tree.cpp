@@ -7,11 +7,10 @@ BinaryTree::~BinaryTree() {
         TreeNode* Left_Tree = node->left;
         TreeNode* Right_Tree = node->right;
         delete node;
-        if (Left_Tree) // 左子树非空则释放
-            f(Left_Tree);
-        if (Right_Tree) // 同
-            f(Right_Tree);
+        if (Left_Tree) f(Left_Tree);
+        if (Right_Tree) f(Right_Tree);
     };
+    // 前序析构
     function<void(TreeNode*)> g = [&](TreeNode* node) {
         if (!node) return;
         stack<TreeNode*> st;
@@ -26,9 +25,9 @@ BinaryTree::~BinaryTree() {
         }
     };
     // recur dtor by preorder
-    // f(root);
+    f(root);
     // iter dtor by preorder
-    g(root);
+    /* g(root); */
 }
 
 // 递归版本生成二叉树(需要捕获用户输入)
@@ -50,7 +49,7 @@ void BinaryTree::add_recur1() {
 
 // 递归生成二叉树: 直接遍历外部数组实现
 void BinaryTree::add_recur2(vector<int>& item) {
-    function<TreeNode*(void)> f = [&](void) {
+    function<TreeNode*()> f = [&]() {
         if (item.empty() || item.front() == 0) {
             item.erase(item.begin());
             return (TreeNode*)nullptr;
@@ -672,13 +671,10 @@ int main(int argc, char const* argv[]) {
     /*
     breadth_travel:
     [1, 2, 3, 4, 5, 6, 7]
-
     pre_order_recur:
     [1, 2, 4, 5, 3, 6, 7]
-
     in_order_recur:
     [4, 2, 5, 1, 6, 3, 7]
-
     post_order_recur:
     [4, 5, 2, 6, 7, 3, 1]
     */

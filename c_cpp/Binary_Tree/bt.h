@@ -13,9 +13,10 @@ using namespace std;
 // 重载<<操作符输出数组
 template <typename T>
 ostream& operator<<(ostream& os, const vector<T>& v) {
+    if (v.empty()) return os << "[]\n";
     os << "[";
     for (auto it = v.begin(); it != v.end(); it++) {
-        cout << *it << (it != v.end() - 1 ? ", " : "] ");
+        os << *it << (it != v.end() - 1 ? ", " : "] ");
     }
     return os;
 }

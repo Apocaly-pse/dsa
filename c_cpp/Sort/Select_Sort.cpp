@@ -4,7 +4,7 @@
 using namespace std;
 
 
-void SelectSort(vector<int> &arr) {
+void SelectSort1(vector<int> &arr) {
     int n = arr.size();
     for (int i = 0; i < n - 1; ++i) {
         int min1 = i;
@@ -21,11 +21,30 @@ void SelectSort(vector<int> &arr) {
     }
 }
 
+void SelectSort2(vector<int> &arr) {
+    int n = arr.size(), i{};
+    while (i < n) {
+        int min1 = i;
+        for (int j = i + 1; j < n; ++j)
+            if (arr[min1] > arr[j]) min1 = j;
+        if (min1 != i) swap(arr[min1], arr[i]);
+        i++;
+    }
+}
+
+void SelectSort(vector<int> &arr) {
+    int n = arr.size();
+    for (int i{}; i < n; ++i) {
+        int min1 = i;
+        for (int j = i + 1; j < n; ++j)
+            if (arr[min1] > arr[j]) min1 = j;
+        if (min1 != i) swap(arr[min1], arr[i]);
+    }
+}
+
 // 此函数用于打印输出数组
 void printArray(vector<int> arr) {
-    for (size_t i = 0; i < arr.size(); ++i) {
-        cout << arr[i] << " ";
-    }
+    for (size_t i = 0; i < arr.size(); ++i) { cout << arr[i] << " "; }
     cout << endl;
 }
 
@@ -40,4 +59,3 @@ int main(int argc, char const *argv[]) {
     printArray(a);
     return 0;
 }
-

@@ -1,154 +1,142 @@
 #include "bst.h"
 
-
-// 递归版本生成二叉树(需要捕获用户输入)
-void BinaryTree::add_recur1() {
-    function<TreeNode*(void)> f = [&](void) {
-        int data;
-        cin >> data;
-        if (data == 0) {
-            return (TreeNode*)nullptr;
-        }
-        TreeNode* node = new TreeNode(data);
-        node->val = data;
-        node->left = f();
-        node->right = f();
-        return node;
+BinarySearchTree::~BinarySearchTree() {
+    function<void(TreeNode*)> f = [&](TreeNode* node) {
+        TreeNode* Left_Tree = node->left;
+        TreeNode* Right_Tree = node->right;
+        cout << node->val << " ";
+        delete node;
+        if (Left_Tree) f(Left_Tree);
+        if (Right_Tree) f(Right_Tree);
     };
-    root = f();
+    f(root);
+    cout << " deleted..\n";
 }
 
-// 递归生成二叉树: 直接遍历外部数组实现
-void BinaryTree::add_recur2(vector<int>& item) {
-    function<TreeNode*(void)> f = [&](void) {
-        if (item.empty() || item.front() == 0) {
-            item.erase(item.begin());
-            return (TreeNode*)nullptr;
-        }
-        TreeNode* node = new TreeNode(item.front());
-        node->val = item.front();
-        item.erase(item.begin());
-        node->left = f();
-        node->right = f();
-        return node;
+void BinarySearchTree::build_from_array(vector<int>& items) {
+    // 有序数组构建二叉搜索树
+    sort(items.begin(), items.end());
+    function<TreeNode*(int, int)> f = [&](int l, int r) {
+        if (l > r) return (TreeNode*)nullptr;
+        int mid = l + (r - l) / 2;
+        return new TreeNode(items[mid], f(l, mid - 1), f(mid + 1, r));
     };
-    root = f();
+    // 迭代
+    function<TreeNode*(void)> g = [&]() {
+        if (items.empty()) return (TreeNode*)nullptr;
+
+        TreeNode* tmp_root = new TreeNode();
+        queue<TreeNode*> nodeQue;
+        queue<int> leftQue, rightQue;
+        nodeQue.push(tmp_root);
+        leftQue.push(0);
+        rightQue.push(items.size() - 1);
+
+        while (!nodeQue.empty()) {
+            auto cur = nodeQue.front();
+            nodeQue.pop();
+            int L = leftQue.front();
+            leftQue.pop();
+            int R = rightQue.front();
+            rightQue.pop();
+
+            int mid = L + (R - L) / 2;
+            cur->val = items[mid]; // 赋值
+            if (L < mid) {
+                cur->left = new TreeNode();
+                nodeQue.push(cur->left);
+                leftQue.push(L);
+                rightQue.push(mid - 1);
+            }
+            if (R > mid) {
+                cur->right = new TreeNode();
+                nodeQue.push(cur->right);
+                leftQue.push(mid + 1);
+                rightQue.push(R);
+            }
+        }
+        return tmp_root;
+    };
+    /* root = f(0, items.size() - 1); */
+    root = g();
 }
 
-
-void BinaryTree::add_iter(int item) {
-    TreeNode* node = new TreeNode(item);
-
-    if (!root) {
-        root = node;
-        return;
-    }
-    // 用队列模拟二叉树的层序遍历
-    queue<TreeNode*> que;
-    que.push(root);
-    while (!que.empty()) {
-        TreeNode* cur_node = que.front();
-        que.pop();
-
-        if (!cur_node->left) {
-            cur_node->left = node;
-            return;
-        } else
-            que.push(cur_node->left);
-
-        // 接下来同样判断右边
-        if (!cur_node->right) {
-            cur_node->right = node;
-            return;
-        } else
-            que.push(cur_node->right);
-    }
-}
-
-void BinaryTree::breadth_travel() {
-    queue<TreeNode*> que;
-    que.push(root);
-    vector<int> ret;
+void BinarySearchTree::breadth_travel() {
     if (!root) return;
+    queue<TreeNode*> que;
+    que.push(root);
+    vector<int> ret;
     while (!que.empty()) {
-        TreeNode* cur_node = que.front();
+        TreeNode* cur = que.front();
         que.pop();
-        // 也可以直接打印, 省去了定义数组的步骤
-        // cout<< cur_node->val<<endl;
-        ret.push_back(cur_node->val);
+        ret.emplace_back(cur->val);
 
-        if (cur_node->left) que.push(cur_node->left);
-        if (cur_node->right) que.push(cur_node->right);
+        if (cur->left) que.push(cur->left);
+        if (cur->right) que.push(cur->right);
     }
-    cout << ret << endl;
+    cout << ret;
 }
 
-/********** pre order **********/
-
-void BinaryTree::pre_order() {
-    vector<int> ret;
-    auto recur_0 = [&ret](auto&& self, TreeNode* node) {
-        // 递归终止条件
-        if (!node) return;
-        ret.push_back(node->val);
-        self(self, node->left);
-        self(self, node->right);
-    };
-    recur_0(recur_0, root);
-    cout << ret << endl;
-}
-
-void BinaryTree::pre_order1() {
-    vector<int> ret;
-    stack<TreeNode*> st;
-    if (root) st.push(root);
-    while (!st.empty()) {
-        auto node = st.top();
-        st.pop();
-        ret.push_back(node->val);
-        if (node->right) st.push(node->right);
-        if (node->left) st.push(node->left);
+void BinarySearchTree::print_tree() {
+    queue<TreeNode*> q;
+    q.push(root);
+    int m = 0;
+    while (!q.empty()) {
+        for (int i = 0; i < q.size(); i++) {
+            auto cur = q.front();
+            q.pop();
+            if (cur->left) q.push(cur->left);
+            if (cur->right) q.push(cur->right);
+        }
+        m++;
     }
-
-    cout << ret << endl;
-}
-void BinaryTree::pre_order2() {
-    vector<int> ret{};
-    stack<pair<int, TreeNode*>> st;
-    if (root) st.push(make_pair(0, root));
-    int color;
-    TreeNode* node;
-    while (!st.empty()) {
-        auto [color, node] = st.top();
-        st.pop();
-        if (node == nullptr) continue;
-        if (color == 0) {
-            st.push(make_pair(0, node->right));
-            st.push(make_pair(0, node->left));
-            st.push(make_pair(1, node));
-        } else {
-            ret.push_back(node->val);
+    int n = (1 << m) - 1;
+    vector<vector<string>> ans(m, vector<string>(n, " "));
+    vector<vector<string>> branch(m, vector<string>(n, " "));
+    queue<tuple<int, int, TreeNode*, string>> bq;
+    bq.push({0, (n - 1) / 2, root, ""s});
+    while (!bq.empty()) {
+        for (int i = 0; i < bq.size(); i++) {
+            auto& [r, c, cur, slash] = bq.front();
+            bq.pop();
+            if (!cur->val) continue;
+            ans[r][c] = to_string(cur->val);
+            if (r == m - 1) {
+                branch[r][c] = slash;
+            } else {
+                if (slash == "/"s)
+                    branch[r][c + 1] = slash;
+                else
+                    branch[r][c - 1] = slash;
+            }
+            if (cur->left)
+                bq.push({r + 1, c - pow(2, m - r - 2), cur->left, "/"s});
+            if (cur->right)
+                bq.push({r + 1, c + pow(2, m - r - 2), cur->right, "\\"s});
         }
     }
-    cout << ret << endl;
+    for (int i = 0; i < m; i++) {
+        for (auto& s : branch[i]) cout << s;
+        cout << endl;
+        for (auto& s : ans[i]) cout << s;
+        cout << endl;
+    }
 }
 
-/********** in order **********/
-
-void BinaryTree::in_order() {
+void BinarySearchTree::in_order_recur() {
     vector<int> ret;
-    auto recur_1 = [&ret](auto&& self, TreeNode* node) {
+    function<void(TreeNode*)> f = [&](TreeNode* node) {
         if (!node) return;
 
-        self(self, node->left);
-        ret.push_back(node->val);
-        self(self, node->right);
+        f(node->left);
+        ret.emplace_back(node->val);
+        f(node->right);
     };
-    recur_1(recur_1, root);
-    cout << ret << endl;
+    f(root);
+    cout << ret;
 }
-
-void BinaryTree::in_order1() {
+void BinarySearchTree::in_order_iter() {
+    if (!root) return;
     vector<int> ret;
     stack<TreeNode*> st;
     auto cur = root;
@@ -159,242 +147,229 @@ void BinaryTree::in_order1() {
         } else {
             cur = st.top();
             st.pop();
-            ret.push_back(cur->val);
+            ret.emplace_back(cur->val);
             cur = cur->right;
         }
     }
-    cout << ret << endl;
+    cout << ret;
 }
 
-void BinaryTree::in_order2() {
-    vector<int> ret;
-    stack<TreeNode*> st;
-    if (root) {
-        st.push(root);
+TreeNode* BinarySearchTree::maximum(TreeNode* x) {
+    while (x->right) x = x->right;
+    return x;
+}
+
+TreeNode* BinarySearchTree::minimum(TreeNode* x) {
+    while (x->left) x = x->left;
+    return x;
+}
+
+int BinarySearchTree::MAX() { return maximum(root)->val; }
+int BinarySearchTree::MIN() { return minimum(root)->val; }
+
+TreeNode* BinarySearchTree::successor(TreeNode* x) {
+    // 如果结点x的右子树非空, 则x后继结点就是其右子树的最左节点(minimum)
+    if (x->right) return minimum(x->right);
+    TreeNode* y = x->parent;
+    // 如果x右子树为空且其后继结点存在, 则其后继就是x的有左孩子的最底层祖先
+    while (y && x == y->right) x = y, y = y->parent;
+    return y;
+}
+
+TreeNode* BinarySearchTree::predecessor(TreeNode* x) {
+    if (x->left) return maximum(x->left);
+    TreeNode* y = x->parent;
+    while (y && x == y->left) x = y, y = y->parent;
+    return y;
+}
+
+TreeNode* BinarySearchTree::_search(TreeNode* x, int target) {
+    /* if (!x || target == x->val) return x; */
+    /* if (target < x->val) */
+    /*     return _search(x->left, target); */
+    /* else */
+    /*     return _search(x->right, target); */
+    while (x && target != x->val)
+        if (target < x->val)
+            x = x->left;
+        else
+            x = x->right;
+    /* cout << x << endl; */
+    return x;
+}
+
+TreeNode* BinarySearchTree::search(int target) { return _search(root, target); }
+
+void BinarySearchTree::insert(int item) {
+    // 循环插入结点构建二叉搜索树, 但是容易退化成链表(不具备平衡性)
+    TreeNode *y{}, *x = root, *z = new TreeNode(item);
+    while (x) {
+        y = x;
+        if (item < x->val)
+            x = x->left;
+        else
+            x = x->right;
     }
-    while (!st.empty()) {
-        auto node = st.top();
-        st.pop();
-        if (node) {
-            if (node->right) {
-                st.push(node->right);
-            }
-            st.push(node);
-            st.push(nullptr);
-            if (node->left) {
-                st.push(node->left);
-            }
-        } else {
-            node = st.top();
-            st.pop();
-            ret.push_back(node->val);
+    z->parent = y;
+    if (!y)
+        root = z;
+    else if (item < y->val)
+        y->left = z;
+    else
+        y->right = z;
+}
+
+void BinarySearchTree::remove_1(TreeNode* node) {
+    // case 1: 无子树
+    if (!node->left && !node->right) {
+        auto parent = node->parent;
+        if (!parent) {
+            delete root;
+            root = nullptr;
+            return;
+        }
+        if (node == parent->left) {
+            delete parent->left;
+            parent->left = nullptr;
+            return;
+        } else if (node == parent->right) {
+            delete parent->right;
+            parent->right = nullptr;
+            return;
         }
     }
-    cout << ret << endl;
+    // case 2: 只有左子树
+    if (node->left && !node->right) {
+        auto cur = node->left;
+        auto val = cur->val;
+        node->left = cur->left;
+        node->right = cur->right;
+        node->val = val;
+        // 修正parent
+        if (node->left) node->left->parent = node;
+        if (node->right) node->right->parent = node;
+        // 删除cur
+        delete cur;
+        cur = nullptr;
+        return;
+    }
+    // case 3: 只有右子树
+    if (!node->left && node->right) {
+        auto cur = node->right;
+        auto val = cur->val;
+        node->left = cur->left;
+        node->right = cur->right;
+        node->val = val;
+        // 修正parent
+        if (node->left) node->left->parent = node;
+        if (node->right) node->right->parent = node;
+        // 删除cur
+        delete cur;
+        cur = nullptr;
+        return;
+    }
+    // case 4: 左右子树都存在且不为空
+    if (node->left && node->right) {
+        auto pre = node->left;
+        while (pre->right) pre = pre->right;
+        node->val = pre->val;
+        // 递归, 最后一定能删除到前面三种情况, 此时结束递归
+        remove(pre);
+    }
 }
 
-void BinaryTree::in_order3() {
-    vector<int> ret{};
-    stack<pair<int, TreeNode*>> st;
-    if (root) st.push(make_pair(0, root));
-    int color;
-    TreeNode* node;
-    while (!st.empty()) {
-        auto [color, node] = st.top();
-        st.pop();
-        if (node == nullptr) continue;
-        if (color == 0) {
-            st.push(make_pair(0, node->right));
-            st.push(make_pair(1, node));
-            st.push(make_pair(0, node->left));
-        } else {
-            ret.push_back(node->val);
+void BinarySearchTree::transplant(TreeNode* u, TreeNode* v) {
+    // 用以v为根的子树替换以u为根的子树
+    // 允许v空
+    if (!u->parent)
+        // 处理u是BST根节点的情况
+        root = v;
+    else if (u == u->parent->left)
+        // u是其父节点的左孩子
+        u->parent->left = v;
+    else
+        // u是其父节点的右孩子
+        u->parent->right = v;
+    // v非空, 更新父节点指针
+    if (v) v->parent = u->parent;
+}
+
+void BinarySearchTree::remove(TreeNode* z) {
+    if (!z->left) // 没有左子树, 右子树可有可无
+        transplant(z, z->right);
+    else if (!z->right) // 没有右子树, 有左子树
+        transplant(z, z->left);
+    else { // 左右子树均存在且不为空
+        auto y = minimum(z->right);
+        if (y->parent != z) {
+            transplant(y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
         }
+        transplant(z, y);
+        y->left = z->left;
+        y->left->parent = y;
     }
-    cout << ret << endl;
 }
 
-/********** post order **********/
-
-void BinaryTree::post_order() {
-    vector<int> ret;
-    auto recur_2 = [&ret](auto&& self, TreeNode* node) {
-        if (!node) return;
-
-        self(self, node->left);
-        self(self, node->right);
-        ret.push_back(node->val);
-    };
-    recur_2(recur_2, root);
-    cout << ret << endl;
+void t1() {
+    BinarySearchTree tree;
+    vector<int> nodes{15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9};
+    for (int i : nodes) tree.insert(i);
+    cout << "breadth_travel: \n";
+    tree.print_tree();
+    int node1{15};
+    cout << "delete node: " << node1 << endl;
+    tree.remove_1(tree.search(node1));
+    /* tree.remove(tree.search(4)); */
+    /* tree.remove(tree.search(3)); */
+    tree.print_tree();
 }
 
-void BinaryTree::post_order1() {
-    stack<TreeNode*> st;
-    vector<int> ret;
-    if (root) {
-        st.push(root);
-    }
-    while (!st.empty()) {
-        auto node = st.top();
-        st.pop();
-        ret.push_back(node->val);
-        if (node->left) st.push(node->left);
-        if (node->right) st.push(node->right);
-    }
-    // 进行逆序操作: 或者采用逆序算法
-    // vector<int> ret1;
-    // for (auto it = ret.rbegin(); it != ret.rend(); it++)
-    // ret1.push_back(*it);
-    reverse(ret.begin(), ret.end());
+void t0() {
+    BinarySearchTree tree;
+    vector<int> nodes{15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9};
+    // 方法一
+    // 严格递增序列, 这样构建的树一定是高度为n-1的一条链
+    // 退化成链表, 所以需要有平衡性的限制(AVL, RBT)
+    /* sort(nodes.begin(), nodes.end()); */
+    for (int i : nodes) tree.insert(i);
+    /* for (int i{1}; i < 8; ++i) tree.insert(i); */
+    // 方法二: 数组构建二叉搜索树, 这种方法出来的一定是平衡的
+    // 但是没有处理父节点指针
+    /* vector<int> arr = {1, 2, 3, 4, 5, 6, 7}; */
+    /* tree.build_from_array(nodes); */
 
-    cout << ret << endl;
+    tree.breadth_travel();
+    cout << "BST is :\n";
+    tree.in_order_recur();
+
+    cout << "MAX of the BST is " << tree.MAX() << endl;
+    cout << "MIN of the BST is " << tree.MIN() << endl;
+
+    auto n1 = tree.search(6);
+    cout << "maximum in tree(6) is " << tree.maximum(n1)->val << endl;
+    cout << "minimum in tree(6) is " << tree.minimum(n1)->val << endl;
+
+    auto node = tree.search(13);
+    int suc = tree.successor(node)->val;
+    int pre = tree.predecessor(node)->val;
+    cout << "suc of 13 is " << suc << endl;
+    cout << "pre of 13 is " << pre << endl;
+    /* [15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9]  */
+    /* BST is : */
+    /* [2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20]  */
+    /* MAX of the BST is 20 */
+    /* MIN of the BST is 2 */
+    /* maximum in tree(6) is 13 */
+    /* minimum in tree(6) is 2 */
+    /* suc of 13 is 15 */
+    /* pre of 13 is 9 */
+    /* 15 6 3 2 4 7 13 9 18 17 20  deleted.. */
 }
-
-void BinaryTree::post_order2() {
-    stack<TreeNode*> st;
-    vector<int> ret;
-    auto node = root;
-    while (!st.empty() || node) {
-        while (node) {
-            st.push(node);
-            node = node->left ? node->left : node->right;
-        }
-        node = st.top();
-        st.pop();
-        ret.push_back(node->val);
-        node =
-            !st.empty() && st.top()->left == node ? st.top()->right : nullptr;
-    }
-
-    cout << ret << endl;
-}
-
-void BinaryTree::post_order3() {
-    stack<TreeNode*> st;
-    vector<int> ret;
-    TreeNode* node = root;
-    while (!st.empty() || node) {
-        if (node) {
-            ret.push_back(node->val);
-            if (node->left) st.push(node->left);
-            node = node->right;
-        } else {
-            node = st.top();
-            st.pop();
-        }
-    }
-    reverse(ret.begin(), ret.end());
-
-    cout << ret << endl;
-}
-
-void BinaryTree::post_order4() {
-    vector<int> ret{};
-    stack<pair<int, TreeNode*>> st;
-    if (root) st.push(make_pair(0, root));
-    int color;
-    TreeNode* node;
-    while (!st.empty()) {
-        auto [color, node] = st.top();
-        st.pop();
-        if (node == nullptr) continue;
-        if (color == 0) {
-            st.push(make_pair(1, node));
-            st.push(make_pair(0, node->right));
-            st.push(make_pair(0, node->left));
-        } else {
-            ret.push_back(node->val);
-        }
-    }
-    cout << ret << endl;
-}
-
 
 int main(int argc, char const* argv[]) {
-    BinaryTree tree;
-    // 第一种生成方式, 层序生成(使用队列进行循环)
-    for (int i = 1; i < 8; ++i) {
-        tree.add_iter(i);
-    }
-
-    // // 第二种生成方式, 递归生成(前序递归), 需要传入用户输入
-    // tree.add_recur1();
-
-    // // 第三种(同第二种), 递归生成, 直接读取数组即可
-    // vector<int> arr = {1, 2, 0, 4, 0, 0, 3, 0, 5, 0, 0};
-    // vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 0, 0, 0, 0, 0, 0, 0, 0};
-    // vector<int> arr = {1, 2, 4, 0, 0, 5, 0, 0, 3, 6, 0, 0, 7, 0, 0};
-    // vector<int> arr = {1, 2, 0, 5, 0, 0, 3, 0, 0};
-    // tree.add_recur2(arr);
-
-    // 下面是遍历
-    // 广度遍历
-    cout << "breadth_travel:\n";
-    tree.breadth_travel();
-
-    // 前序遍历(递归)
-    cout << "\npre_order_recur:\n";
-    tree.pre_order();
-    // 前序遍历(循环)
-    cout << "pre_order_iter1:\n";
-    tree.pre_order1();
-    cout << "pre_order_iter2:\n";
-    tree.pre_order2();
-
-    // 中序遍历(递归)
-    cout << "\nin_order_recur:\n";
-    tree.in_order();
-    // 中序遍历(循环)
-    cout << "in_order_iter1:\n";
-    tree.in_order1();
-    cout << "in_order_iter2:\n";
-    tree.in_order2();
-    cout << "in_order_iter3:\n";
-    tree.in_order3();
-
-    // 后序遍历(递归)
-    cout << "\npost_order_recur:\n";
-    tree.post_order();
-    // 后序遍历(循环)
-    cout << "post_order_iter1:\n";
-    tree.post_order1();
-    cout << "post_order_iter2:\n";
-    tree.post_order2();
-    cout << "post_order_iter3:\n";
-    tree.post_order3();
-    cout << "post_order_iter4:\n";
-    tree.post_order4();
+    /* t0(); */
+    t1();
     return 0;
-    /*
-breadth_travel:
-[1, 2, 3, 4, 5, 6, 7]
-
-pre_order_recur:
-[1, 2, 4, 5, 3, 6, 7]
-pre_order_iter1:
-[1, 2, 4, 5, 3, 6, 7]
-pre_order_iter2:
-[1, 2, 4, 5, 3, 6, 7]
-
-in_order_recur:
-[4, 2, 5, 1, 6, 3, 7]
-in_order_iter1:
-[4, 2, 5, 1, 6, 3, 7]
-in_order_iter2:
-[4, 2, 5, 1, 6, 3, 7]
-in_order_iter3:
-[4, 2, 5, 1, 6, 3, 7]
-
-post_order_recur:
-[4, 5, 2, 6, 7, 3, 1]
-post_order_iter1:
-[4, 5, 2, 6, 7, 3, 1]
-post_order_iter2:
-[4, 5, 2, 6, 7, 3, 1]
-post_order_iter3:
-[4, 5, 2, 6, 7, 3, 1]
-post_order_iter4:
-[4, 5, 2, 6, 7, 3, 1]
-    */
 }

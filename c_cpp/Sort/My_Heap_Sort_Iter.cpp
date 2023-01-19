@@ -8,8 +8,7 @@ ostream &operator<<(ostream &os, vector<int> &v) {
 }
 
 void Max_Heapify(vector<int> &arr, int len, int i) {
-    int largest{}, tmp = arr[i];
-    for (; i * 2 < len; i = largest) {
+    for (int largest{}, tmp = arr[i]; i * 2 < len; i = largest) {
         largest = i * 2;
         if (largest + 1 < len && arr[largest + 1] > arr[largest]) largest++;
         if (arr[i] < arr[largest])

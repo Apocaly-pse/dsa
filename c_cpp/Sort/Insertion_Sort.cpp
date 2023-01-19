@@ -3,8 +3,14 @@
 
 using namespace std;
 
-
-void InsertionSort(vector<int> &arr) {
+// 此函数用于打印输出数组
+void printArray(vector<int> arr) {
+    for (size_t i = 0; i < arr.size(); ++i) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+void InsertionSort1(vector<int> &arr) {
     int len = arr.size();
     // 首先从第二个元素开始,遍历数组
     for (int j = 1; j < len; j++) {
@@ -20,18 +26,48 @@ void InsertionSort(vector<int> &arr) {
     }
 }
 
-
-// 此函数用于打印输出数组
-void printArray(vector<int> arr) {
-    for (size_t i = 0; i < arr.size(); ++i) {
-        cout << arr[i] << " ";
+void InsertionSort2(vector<int> &arr) {
+    int n = arr.size();
+    // 左边为已排序区,右边是待排序区
+    for (int j = 1; j < n; ++j) {
+        int i = j - 1, tmp = arr[j]; // tmp:待插入元素
+        // 往后挪元素,腾出来位置留给tmp
+        // 从后往前遍历,寻找插入位置
+        for (; i >= 0 && arr[i] > tmp; --i) arr[i + 1] = arr[i];
+        // 最后插入tmp
+        arr[i + 1] = tmp;
     }
-    cout << endl;
+}
+
+void InsertionSort3(vector<int> &arr) {
+    int n = arr.size();
+    // 遍历待插入元素
+    for (int i = 1; i < n; ++i) {
+        int tmp = arr[i], j{};
+        // 从前往后遍历, 寻找插入位置(遍历已排好序的元素)
+        while (j < i && arr[j] <= tmp) ++j;
+        if (j == i) continue;
+        int idx = j;
+        // for (; i > idx; --i) arr[i] = arr[i - 1];
+        for (int k{}; k <= i - idx; ++k) arr[i - k] = arr[i - 1 - k];
+        arr[idx] = tmp;
+        printArray(arr);
+    }
+}
+
+void InsertionSort(vector<int> &arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; ++i) {
+        int tmp = arr[i], j = i;
+        for (; j >= 0 && arr[j - 1] > tmp; --j) arr[j] = arr[j - 1];
+        arr[j] = tmp;
+    }
 }
 
 int main(int argc, char const *argv[]) {
     // 定义数组
     vector<int> a = {19, 97, 9, 17, 1, 8};
+
     // 输出原始数组
     printArray(a);
     // 排序

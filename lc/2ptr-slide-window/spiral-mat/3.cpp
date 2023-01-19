@@ -17,7 +17,14 @@ ostream& operator<<(ostream& os, const vector<vector<T>> v2) {
 class Solution {
 public:
     vector<vector<int>> spiralMatrixIII(int rows, int cols, int rStart,
-                                        int cStart) {}
+                                        int cStart) {
+        int SIZE{rows * cols};
+        vector<vector<int>> ans(SIZE);
+        ans[0] = {rStart, cStart};
+        int i{1}, c{cStart}, r{rStart};
+        whiel(i < SIZE) {}
+    }
+
     vector<vector<int>> spiralMatrixIII1(int rows, int cols, int rStart,
                                          int cStart) {
         int SIZE{rows * cols};
@@ -46,7 +53,14 @@ void t1() {
     Solution s;
     // vector<vector<int>> mat = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     // cout << mat;
-    cout << s.spiralMatrixIII(5, 6, 1, 4);
+    // cout << s.spiralMatrixIII(5, 6, 1, 4);
+    cout << s.spiralMatrixIII1(1, 4, 0, 0);
+    /*
+    0 0
+    0 1
+    0 2
+    0 3
+    */
 }
 
 int main(int argc, char const* argv[]) {

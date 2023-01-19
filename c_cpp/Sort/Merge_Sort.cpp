@@ -1,16 +1,17 @@
-#include <climits>
-#include <cstdlib>
 #include <iostream>
-#include <ctime>
+#include <vector>
 
 using namespace std;
 
 /*
-归并排序基本思想
-具体思路:
+归并排序
 */
 
-void printArray(int arr[], int len);
+// 此函数用于打印输出数组
+void printArray(vector<int> arr) {
+    for (size_t i = 0; i < arr.size(); ++i) cout << arr[i] << " ";
+    cout << endl;
+}
 
 
 // merge the sorted list
@@ -19,6 +20,7 @@ void Merge(int arr[], int p, int q, int r) {
     int arr1[n1 + 1], arr2[n2 + 1];
     for (int i = 0; i < n1; ++i) arr1[i] = arr[p + i];
     for (int j = 0; j < n2; ++j) arr2[j] = arr[q + j + 1];
+    // 标记
     arr1[n1] = 10000;
     arr2[n2] = 10000;
     int i = 0, j = i;
@@ -33,15 +35,12 @@ void Merge(int arr[], int p, int q, int r) {
     }
 }
 
-void merge(int arr[], int L, int M, int R) { // 归并左右两侧数组
-    // int *a = (int *)malloc((R - L + 1) * sizeof(int)); // 新建一个空数组
-    int a[R - L + 1];
-    int i = 0;
-    int p1 = L;
-    int p2 = M + 1;
-    while (p1 <= M && p2 <= R) { // 左右依次比较将小数放入新数组中
+void merge(vector<int> &arr, int L, int M, int R) {
+    vector<int> a(R - L + 1);
+    int i = 0, p1 = L, p2 = M + 1;
+    // 左右依次比较将小数放入新数组中
+    while (p1 <= M && p2 <= R)
         a[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
-    }
     // 如果左侧没全部放入则依次全部放入
     while (p1 <= M) a[i++] = arr[p1++];
     // 如果右侧没全部放入则依次全部放入
@@ -50,34 +49,42 @@ void merge(int arr[], int L, int M, int R) { // 归并左右两侧数组
     for (i = 0; i < R - L + 1; i++) arr[L + i] = a[i];
 }
 
-void MergeSort(int arr[], int L, int R) {
-    if (L < R) {
-        int M = L + (R - L) / 2;
-        MergeSort(arr, L, M);
-        MergeSort(arr, M + 1, R);
-        // Merge(arr, L, M, R);
-        merge(arr, L, M, R);
+void MergeSort1(vector<int> &arr, int L, int R) {
+    if (L >= R) return;
+    int M = L + (R - L) / 2;
+    MergeSort1(arr, L, M);
+    MergeSort1(arr, M + 1, R);
+    // Merge(arr, L, M, R);
+    merge(arr, L, M, R);
+}
+
+void MergeSort2(vector<int> &arr) {
+    int n = arr.size();
+    for (int cur = 1; cur < n; cur *= 2) {
+        for (int left{}; left < n - 1; left += 2 * cur) {
+            int mid = min(left + cur - 1, n - 1);
+            int right = min(left + 2 * cur - 1, n - 1);
+            merge(arr, left, mid, right);
+        }
     }
 }
 
-// 此函数用于打印输出数组
-void printArray(int arr[], int len) {
-    for (int i = 0; i < len; ++i) { cout << arr[i] << " "; }
-    cout << endl;
+void MergeSort(vector<int> &arr) {
+    int n = arr.size();
+    // 两两归并的序列的长度, 1,2,4,8
+    for (int i = 1; i < n; i *= 2)
+        // 对于每两个相邻的子序列进行归并, 子序列的长度
+        for (int j = 0; j < n - i; j += 2 * i)
+            merge(arr, j, j + i - 1, min(j + 2 * i - 1, n - 1));
 }
 
 int main(int argc, char const *argv[]) {
-    clock_t t0, t1;
-    t0 = clock();
-    const int SIZE = 8;
-    int a[SIZE] = {19, 2, 5, 97, 9, 17, 1, 8};
-
-    printArray(a, SIZE);
+    vector<int> arr = {19, 2, 5, 97, 9, 17, 1, 8};
+    printArray(arr);
     // 进行排序
-    MergeSort(a, 0, SIZE - 1);
+    MergeSort(arr);
+    /* MergeSort(arr, 0, arr.size() - 1); */
     // 输出排序后的数组
-    printArray(a, SIZE);
-    t1 = clock();
-    cout << "Time: " << double(t1 - t0) / CLOCKS_PER_SEC << "s" << endl;
+    printArray(arr);
     return 0;
 }

@@ -3,8 +3,8 @@
 
 using namespace std;
 
-void printArray(vector<int> arr);
-void BubbleSort(vector<int>& arr) {
+void printArray(const vector<int>& arr);
+void BubbleSort1(vector<int>& arr) {
     int len = arr.size();
     for (int i = 0; i < len; i++) {
         int flag = 0;
@@ -25,11 +25,35 @@ void BubbleSort(vector<int>& arr) {
     }
 }
 
-// 此函数用于打印输出数组
-void printArray(vector<int> arr) {
-    for (size_t i = 0; i < arr.size(); ++i) {
-        cout << arr[i] << " ";
+void BubbleSort2(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = n; i > 0; --i) {
+        bool exchanged = false;
+        for (int j = 1; j < i; ++j)
+            if (arr[j - 1] > arr[j]) {
+                swap(arr[j - 1], arr[j]);
+                exchanged = true;
+            }
+        if (!exchanged) break;
     }
+}
+
+void BubbleSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; ++i) {
+        bool exchanged = false;
+        for (int j = 0; j < n - i; ++j)
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+                exchanged = true;
+            }
+        if (!exchanged) break;
+    }
+}
+
+// 此函数用于打印输出数组
+void printArray(const vector<int>& arr) {
+    for (size_t i = 0; i < arr.size(); ++i) cout << arr[i] << " ";
     cout << endl;
 }
 

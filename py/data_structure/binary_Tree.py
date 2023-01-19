@@ -343,8 +343,8 @@ if __name__ == "__main__":
     # tree.breadth_travel()
     print("广度遍历1: ")
     tree.breadth_travel1()
-    # print("广度遍历2: ")
-    # tree.breadth_travel2()
+    print("广度遍历2: ")
+    tree.breadth_travel2()
 
     print("\n深度遍历: ")
     print("前序遍历: 递归")

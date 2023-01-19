@@ -2,11 +2,18 @@
 #include <stack>
 #include <ctime>
 #include <tuple>
+#include <vector>
+#include <chrono>
+#include <random>
+
+using namespace std::chrono;
 
 using namespace std;
 
-void printArray(int A[], int len) {
-    for (int i = 0; i < len; ++i) { cout << A[i] << " "; }
+void printArray(const vector<int> &A) {
+    for (int i = 0; i < A.size(); ++i) {
+        cout << A[i] << " ";
+    }
     cout << endl;
 }
 
@@ -21,32 +28,53 @@ void printArray(int A[], int len) {
 需要左右两个游标, 分别对左右两个子序列进行值比较
 */
 
-// 子数组的处理
-int Partition(int A[], int l, int r) {
+// 这部分相当于是插入排序
+int Partition1(vector<int> &arr, int l, int r) {
     /*i: the number of left side of x */
-    int mid = l + (r - l) / 2;
-    int pivot = A[mid], i = l - 1;
+    int mid = l + (r - l) / 2; // 选pivot
+    int pivot = arr[mid], i = l - 1;
     for (int j = l; j <= r; ++j) {
         if (j == mid) continue;
-        if (A[j] <= pivot) swap(A[++i], A[j]);
+        if (arr[j] <= pivot) swap(arr[++i], arr[j]);
     }
-    swap(A[i + 1], A[mid]);
-    return i + 1;
+    swap(arr[++i], arr[mid]);
+    return i; // 返回pivot插入的位置
+}
+
+int Partition2(vector<int> &arr, int l, int r) {
+    /*i: the number of left side of x */
+    int x = arr[r], i = l - 1;
+    for (int j = l; j < r; ++j)
+        if (arr[j] <= x) swap(arr[++i], arr[j]);
+    swap(arr[++i], arr[r]);
+    // printArray(arr);
+    return i; // 返回pivot插入的位置
+}
+
+int Partition(vector<int> &arr, int l, int r) {
+    /*i: the number of left side of x */
+    int x = arr[l], i = l;
+    for (int j = l + 1; j <= r; ++j)
+        if (arr[j] <= x) swap(arr[++i], arr[j]);
+    swap(arr[i], arr[l]);
+    // printArray(arr);
+    return i; // 返回pivot插入的位置
 }
 
 // 递归实现快速排序算法
-void QuickSort1(int A[], int l, int r) {
+void QuickSort1(vector<int> &arr, int l, int r) {
     if (l >= r) return;
-    int m = Partition(A, l, r);
-    QuickSort1(A, l, m - 1);
-    QuickSort1(A, m + 1, r);
+    int m = Partition1(arr, l, r);
+    QuickSort1(arr, l, m - 1);
+    QuickSort1(arr, m + 1, r);
 }
 
 
-/* A[] --> Array to be sorted,
+/* arr --> Array to be sorted,
     l  --> Starting index,
     r  --> Ending index */
-void QuickSort2(int arr[], int l, int r) {
+void QuickSort2(vector<int> &arr) {
+    int l{}, r = arr.size() - 1;
     int stack[r - l + 1];
     // 栈顶指针(索引)
     int top = -1;
@@ -72,33 +100,57 @@ void QuickSort2(int arr[], int l, int r) {
     }
 }
 
-void QuickSort(int A[], int l, int r) {
+void QuickSort(vector<int> &arr) {
+    int l{}, r = arr.size() - 1;
     // with STL: stack
     stack<pair<int, int>> st;
     st.push(make_pair(l, r));
     while (!st.empty()) {
         tie(l, r) = st.top();
         st.pop();
-        int p = Partition(A, l, r);
+        int p = Partition(arr, l, r);
         if (p - 1 > l) st.push(make_pair(l, p - 1));
         if (p + 1 < r) st.push(make_pair(p + 1, r));
     }
 }
 
+vector<int> gen_data(size_t N) {
+    vector<int> data(N);
+    int min1{}, max1{10000};
+
+    // random_device seed;
+    ranlux48 engine(1);
+    uniform_int_distribution<> distrib(min1, max1);
+    for (int i{}; i < N; ++i) {
+        int ran1 = distrib(engine);
+        data[i] = ran1;
+    }
+    // printArray(data);
+    return data;
+}
+
+void t1() {
+    auto start = system_clock::now();
+    // 定义数组
+    // vector<int> arr = {19, 97, 9, 17, 1, 8};
+    auto arr = gen_data(10000);
+    // 输出原始数组
+    // printArray(arr);
+    // 进行快速排序
+    // QuickSort2(arr);
+    cout << "sorting...\n";
+    QuickSort1(arr, 0, arr.size() - 1);
+    // 输出排序后的数组
+    // printArray(arr);
+    auto end = system_clock::now();
+    auto duration = duration_cast<microseconds>(end - start);
+    cout << "Time spent: "
+         << double(duration.count()) * microseconds::period::num << "ms"
+         << endl;
+}
 
 int main(int argc, char const *argv[]) {
-    clock_t t0, t1;
-    t0 = clock();
-    const int len = 6;
-    // 定义数组
-    int a[len] = {19, 97, 9, 17, 1, 8};
-    // 输出原始数组
-    printArray(a, len);
-    // 进行快速排序
-    QuickSort(a, 0, len - 1);
-    // 输出排序后的数组
-    printArray(a, len);
-    t1 = clock();
-    cout << "Time: " << double(t1 - t0) / CLOCKS_PER_SEC << "s" << endl;
+
+    t1();
     return 0;
 }
