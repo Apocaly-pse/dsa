@@ -17,6 +17,10 @@ Ank	py/combinatorial_number.py	/^def Ank(n, k):$/;"	f
 At	math/高精度计算C++.cpp	/^#define At(/;"	d	file:
 BLACK	c_cpp/Red_Black_Tree/rbt.cpp	/^const bool BLACK = false;$/;"	v
 BSTREE	c_cpp/Binary_Tree/bst.h	/^#define BSTREE$/;"	d
+BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode() : val(0), left(nullptr), right(nullptr), parent(nullptr) {}$/;"	f	struct:BSTreeNode
+BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode(int x)$/;"	f	struct:BSTreeNode
+BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode(int x, BSTreeNode* left1, BSTreeNode* right1)$/;"	f	struct:BSTreeNode
+BSTreeNode	c_cpp/Binary_Tree/bst.h	/^struct BSTreeNode {$/;"	s
 BTREE	c_cpp/Binary_Tree/bt.h	/^#define BTREE$/;"	d
 BagMaxVAlue	c_cpp/dp/0-1-bag.cpp	/^    int BagMaxVAlue(vector<int>& value, vector<int>& weight, int maxWeight) {$/;"	f	class:Solution
 BagMaxVAlue1	c_cpp/dp/0-1-bag.cpp	/^    int BagMaxVAlue1(vector<int>& value, vector<int>& weight, int maxWeight) {$/;"	f	class:Solution
@@ -194,10 +198,12 @@ ListNode	lc/test-cpp/LinkedList.cpp	/^    ListNode(int x) : val(x), next(nullptr
 ListNode	lc/test-cpp/LinkedList.cpp	/^    ListNode(int x, ListNode *next) : val(x), next(next) {}$/;"	f	struct:ListNode
 ListNode	lc/test-cpp/LinkedList.cpp	/^struct ListNode {$/;"	s	file:
 MAX	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^int BinarySearchTree::MAX() { return maximum(root)->val; }$/;"	f	class:BinarySearchTree
+MAX	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^int RedBlackTree::MAX() { return maximum(root)->val; }$/;"	f	class:RedBlackTree
 MAXN	c_cpp/union-find-set.cpp	/^const int MAXN = 10000;$/;"	v
 MAXN	py/find-and-union-set/find-union-set.py	/^MAXN = 10$/;"	v
 MAX_BOARDSIZE	lc/back-tracking/n-queens.c	/^const int MAX_BOARDSIZE = 18;$/;"	v
 MIN	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^int BinarySearchTree::MIN() { return minimum(root)->val; }$/;"	f	class:BinarySearchTree
+MIN	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^int RedBlackTree::MIN() { return minimum(root)->val; }$/;"	f	class:RedBlackTree
 MIN_BOARDSIZE	lc/back-tracking/n-queens.c	/^const int MIN_BOARDSIZE = 2;$/;"	v
 MOD	lc/1801-priority-queue-simulation-1.cpp	/^constexpr int MOD = 1e9 + 7;$/;"	v
 Main	java/88-1000.java	/^public class Main {$/;"	c
@@ -251,12 +257,21 @@ QuickSort	py/sort_algorithm/Quick_Sort.py	/^def QuickSort(R, m, n):$/;"	f
 QuickSort1	c_cpp/Sort/Quick_Sort_CLRS.cpp	/^void QuickSort1(vector<int> &arr, int l, int r) {$/;"	f
 QuickSort2	c_cpp/Sort/Quick_Sort_CLRS.cpp	/^void QuickSort2(vector<int> &arr) {$/;"	f
 RBT	py/data_structure/Red-Black-tree.py	/^class RBT(object):$/;"	c
+RBTREE	c_cpp/Binary_Tree/rbt.h	/^#define RBTREE$/;"	d
+RBTreeNode	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode() : RBTreeNode(0, nullptr, nullptr, true) {}$/;"	f	struct:RBTreeNode
+RBTreeNode	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode(int val1, RBTreeNode* l1, RBTreeNode* r1, bool c1)$/;"	f	struct:RBTreeNode
+RBTreeNode	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode(int x) : RBTreeNode(x, nullptr, nullptr, true) {}$/;"	f	struct:RBTreeNode
+RBTreeNode	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode(int x, RBTreeNode* l1, RBTreeNode* r1)$/;"	f	struct:RBTreeNode
+RBTreeNode	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode(int x, bool c1) : RBTreeNode(x, nullptr, nullptr, c1) {}$/;"	f	struct:RBTreeNode
+RBTreeNode	c_cpp/Binary_Tree/rbt.h	/^struct RBTreeNode {$/;"	s
 RED	c_cpp/Red_Black_Tree/rbt.cpp	/^const bool RED = true;$/;"	v
 RM	math/Makefile	/^RM = \/opt\/homebrew\/Cellar\/cmake\/3.24.2\/bin\/cmake -E rm -f$/;"	m
 RM	math/build/Makefile	/^RM = \/opt\/homebrew\/Cellar\/cmake\/3.24.2\/bin\/cmake -E rm -f$/;"	m
 RadixSort	c_cpp/Sort/Radix_Sort.cpp	/^void RadixSort(vector<int>& arr) {$/;"	f
 RadixSort	py/sort_algorithm/Radix_Sort.py	/^def RadixSort(arr: List[int]) -> List[int]:$/;"	f
 Rational	py/class_rational_number.py	/^class Rational(object):$/;"	c
+RedBlackTree	c_cpp/Binary_Tree/rbt.h	/^    RedBlackTree() : root(nullptr) {}$/;"	f	class:RedBlackTree
+RedBlackTree	c_cpp/Binary_Tree/rbt.h	/^class RedBlackTree {$/;"	c
 RedBlackTree	c_cpp/Red_Black_Tree/rbt.cpp	/^    RedBlackTree() : root(nullptr) {}$/;"	f	class:RedBlackTree
 RedBlackTree	c_cpp/Red_Black_Tree/rbt.cpp	/^class RedBlackTree {$/;"	c	file:
 SHELL	math/Makefile	/^SHELL = \/bin\/sh$/;"	m
@@ -362,10 +377,6 @@ TARGET	c_cpp/back-tracking/24-8-8-1000/src-8-8-1000.cpp	/^const int TARGET = 100
 TARGET	java/88-1000.java	/^static final int TARGET = 1000;$/;"	f	class:Main
 Timer	py/data_structure/timeit_list.py	/^from timeit import Timer$/;"	i
 TopSort	c_cpp/Sort/Topology_Sort.cpp	/^bool TopSort(vector<vector<int>> &G, int n, vector<int> &inDegree) {$/;"	f
-TreeNode	c_cpp/Binary_Tree/bst.h	/^    TreeNode() : val(0), left(nullptr), right(nullptr), parent(nullptr) {}$/;"	f	struct:TreeNode
-TreeNode	c_cpp/Binary_Tree/bst.h	/^    TreeNode(int x) : val(x), left(nullptr), right(nullptr), parent(nullptr) {}$/;"	f	struct:TreeNode
-TreeNode	c_cpp/Binary_Tree/bst.h	/^    TreeNode(int x, TreeNode* left1, TreeNode* right1)$/;"	f	struct:TreeNode
-TreeNode	c_cpp/Binary_Tree/bst.h	/^struct TreeNode {$/;"	s
 TreeNode	c_cpp/Binary_Tree/bt.h	/^    TreeNode() : val(0), left(nullptr), right(nullptr) {}$/;"	f	struct:TreeNode
 TreeNode	c_cpp/Binary_Tree/bt.h	/^    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}$/;"	f	struct:TreeNode
 TreeNode	c_cpp/Binary_Tree/bt.h	/^    TreeNode(int x, TreeNode* left1, TreeNode* right1)$/;"	f	struct:TreeNode
@@ -399,7 +410,8 @@ __init__	py/data_structure/single_cycle_link_list.py	/^    def __init__(self, no
 __init__	py/data_structure/single_link_list.py	/^    def __init__(self, elem):$/;"	m	class:Node
 __init__	py/data_structure/single_link_list.py	/^    def __init__(self, node=None):$/;"	m	class:SingleLinkList
 _gcd	py/class_rational_number.py	/^    def _gcd(m, n):$/;"	m	class:Rational
-_search	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^TreeNode* BinarySearchTree::_search(TreeNode* x, int target) {$/;"	f	class:BinarySearchTree
+_search	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^BSTreeNode *BinarySearchTree::_search(BSTreeNode *x, int target) {$/;"	f	class:BinarySearchTree
+_search	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RBTreeNode *RedBlackTree::_search(RBTreeNode *x, int target) {$/;"	f	class:RedBlackTree
 a	c_cpp/back-tracking/24-8-8-1000/8_8_1000.cpp	/^item a[N];$/;"	v
 a	c_cpp/back-tracking/24-8-8-1000/src-8-8-1000.cpp	/^item a[N];$/;"	v
 a	lc/lc-1089-duplicate_zero.py	/^    a = [1, 0, 2, 3, 0, 4, 5, 0]$/;"	v
@@ -471,6 +483,7 @@ bb	math/高精度计算C++.cpp	/^BigInt ba, bb;$/;"	v
 bool8	math/sieve-method/era-with-numpy.py	/^from numpy import array, int64, bool8, append$/;"	i
 breadth_travel	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::breadth_travel() {$/;"	f	class:BinarySearchTree
 breadth_travel	c_cpp/Binary_Tree/Binary_Tree.cpp	/^void BinaryTree::breadth_travel() {$/;"	f	class:BinaryTree
+breadth_travel	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::breadth_travel() {$/;"	f	class:RedBlackTree
 breadth_travel	py/data_structure/AVL_tree.py	/^    def breadth_travel(self):$/;"	m	class:BinarySearchTree
 breadth_travel	py/data_structure/Red-Black-tree.py	/^    def breadth_travel(self):$/;"	m	class:RBT
 breadth_travel	py/data_structure/binary-search-tree.py	/^    def breadth_travel(self):$/;"	m	class:BinarySearchTree
@@ -492,7 +505,7 @@ bt	lc/back-tracking/51-nqueens.cpp	/^    void bt(int n, int row, vector<string> 
 bt	lc/back-tracking/lc-17-phone-number.py	/^        def bt(d):$/;"	f	function:Solution.letterCombinations
 bt	py/back-tracking/24.py	/^        def bt(tmp):$/;"	f	function:Solution.judgePoint24
 buf	c_cpp/back-tracking/24-8-8-1000/src-8-8-1000.cpp	/^char buf[10];$/;"	v
-build_from_array	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::build_from_array(vector<int>& items) {$/;"	f	class:BinarySearchTree
+build_from_array	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::build_from_array(vector<int> &items) {$/;"	f	class:BinarySearchTree
 cal	c_cpp/back-tracking/24-8-8-1000/8_8_1000.cpp	/^    string cal; \/\/ 数字对应的字符形式$/;"	m	struct:item	file:
 cal	c_cpp/back-tracking/24-8-8-1000/src-8-8-1000.cpp	/^    string cal;$/;"	m	struct:item	file:
 calc	c_cpp/back-tracking/24-8-8-1000/24-pt.cpp	/^    double calc(int op, double a, double b) {$/;"	f	class:Solution
@@ -509,6 +522,7 @@ check1	lc/back-tracking/eight_queens_rest_method2.cpp	/^bool check1(int xx, int 
 check2	lc/back-tracking/eight_queens_rest_method2.cpp	/^bool check2(int xx, int yy) {$/;"	f
 chessboard	lc/back-tracking/eight_queens.cpp	/^int chessboard[N][N] = {};$/;"	v
 climbStairs	lc/dp_/climb_stairs.cpp	/^int climbStairs(int n) {$/;"	f
+color	c_cpp/Binary_Tree/rbt.h	/^    bool color; \/\/ true:black, false:red$/;"	m	struct:RBTreeNode
 color	c_cpp/Red_Black_Tree/rbt.cpp	/^    bool color;$/;"	m	struct:Node	file:
 colors	py/1.py	/^colors = {}$/;"	v
 comb	lc/lc-233.py	/^from math import comb$/;"	i
@@ -629,6 +643,7 @@ head	c_cpp/Linked_List/Single_Linked_List.hpp	/^    ListNode* head;$/;"	m	class:
 idx	lc/str_/KMP.py	/^    idx = KMP(s1, s2)$/;"	v
 img	py/1.py	/^img = Image.open('image.png')$/;"	v
 in_order	c_cpp/Binary_Tree/Binary_Tree.cpp	/^void BinaryTree::in_order() {$/;"	f	class:BinaryTree
+in_order	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::in_order() {$/;"	f	class:RedBlackTree
 in_order	py/data_structure/AVL_tree.py	/^    def in_order(self, node):$/;"	m	class:BinarySearchTree
 in_order	py/data_structure/Red-Black-tree.py	/^    def in_order(self, node):$/;"	m	class:RBT
 in_order	py/data_structure/binary-search-tree.py	/^    def in_order(self, node):$/;"	m	class:BinarySearchTree
@@ -676,11 +691,13 @@ info_version_internal	math/build/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompile
 info_version_internal	math/build/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_version_internal = "INFO" ":" "compiler_version_internal[" COMPILER_VERSION_INTERNAL_STR "]";$/;"	v
 init	c_cpp/union-find-set.cpp	/^inline void init(int n) {$/;"	f
 insert	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::insert(int item) {$/;"	f	class:BinarySearchTree
+insert	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::insert(int item) {$/;"	f	class:RedBlackTree
 insert	c_cpp/Linked_List/Single_Linked_List.hpp	/^void LinkedList::insert(int pos, int val) {$/;"	f	class:LinkedList
 insert	c_cpp/Red_Black_Tree/rbt.cpp	/^    void insert(int val) {$/;"	f	class:RedBlackTree
 insert	py/data_structure/double_link_list.py	/^    def insert(self, pos, item):$/;"	m	class:DoubleLinkList
 insert	py/data_structure/single_cycle_link_list.py	/^    def insert(self, pos, item):$/;"	m	class:SingleCycleLinkList
 insert	py/data_structure/single_link_list.py	/^    def insert(self, pos, item):$/;"	m	class:SingleLinkList
+insert_fixup	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::insert_fixup(RBTreeNode *z) {$/;"	f	class:RedBlackTree
 int64	math/sieve-method/era-with-numpy.py	/^from numpy import array, int64, bool8, append$/;"	i
 isInterleave	lc/lc-97-interleaving-string.py	/^    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:$/;"	m	class:Solution
 is_empty	py/data_structure/Deque.py	/^    def is_empty(self):$/;"	m	class:Deque
@@ -705,9 +722,11 @@ judgePoint24	py/back-tracking/24.py	/^    def judgePoint24(self, cards: List[int
 jump	lc/lc-45.py	/^    def jump(self, nums: List[int]) -> int:$/;"	m	class:Solution
 last	c_cpp/Linked_List/Single_Linked_List.hpp	/^ListNode* LinkedList::last() {$/;"	f	class:LinkedList
 lcm	lc/lc-592-frac-plus-minus.py	/^    def lcm(self, a, b):$/;"	m	class:Solution
-left	c_cpp/Binary_Tree/bst.h	/^    TreeNode* left;$/;"	m	struct:TreeNode
+left	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode* left;$/;"	m	struct:BSTreeNode
 left	c_cpp/Binary_Tree/bt.h	/^    TreeNode* left;$/;"	m	struct:TreeNode
+left	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode* left;$/;"	m	struct:RBTreeNode
 left	c_cpp/Red_Black_Tree/rbt.cpp	/^    Node *left;$/;"	m	struct:Node	file:
+left_rotate	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::left_rotate(RBTreeNode *x) {$/;"	f	class:RedBlackTree
 len	c_cpp/Linked_List/Single_Linked_List.hpp	/^int LinkedList::len() {$/;"	f	class:LinkedList
 length	py/data_structure/double_link_list.py	/^    def length(self):$/;"	m	class:DoubleLinkList
 length	py/data_structure/single_cycle_link_list.py	/^    def length(self):$/;"	m	class:SingleCycleLinkList
@@ -718,8 +737,9 @@ long_division_sqrt	math/gpt-long-division.cpp	/^double long_division_sqrt(double
 longestConsecutive	lc/hash-table/lc-128.py	/^    def longestConsecutive(self, nums: List[int]) -> int:$/;"	m	class:Solution
 longestPalindrome	lc/lc-5.py	/^    def longestPalindrome(self, s: str) -> str:$/;"	m	class:Solution
 lookandsay	lc/look-and-say.py	/^def lookandsay(limit, sequence=21):$/;"	f
-main	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^int main(int argc, char const* argv[]) {$/;"	f
+main	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	c_cpp/Binary_Tree/Binary_Tree.cpp	/^int main(int argc, char const* argv[]) {$/;"	f
+main	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	c_cpp/Graph_Theory/Union_Find_Set.cpp	/^int main() {$/;"	f
 main	c_cpp/Linked_List/Reverse_Singly_linked_list.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	c_cpp/Linked_List/test_Single_Linked_List.cpp	/^int main(int argc, char* argv[]) {$/;"	f
@@ -773,7 +793,7 @@ main	lc/moveZeros.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	lc/str_/KMP.cpp	/^int main(int argc, char$/;"	f
 main	lc/test-cpp/LinkedList.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
 main	lc/test-lc-735.cc	/^int main(int argc, char const *argv[])$/;"	f
-main	math/add-digits.cpp	/^int main(int argc, char const *argv[]) {$/;"	f
+main	math/add-digits.cpp	/^int main(int argc, char const* argv[]) {$/;"	f
 main	math/build/CMakeFiles/3.24.2/CompilerIdC/CMakeCCompilerId.c	/^int main(argc, argv) int argc; char *argv[];$/;"	f
 main	math/build/CMakeFiles/3.24.2/CompilerIdC/CMakeCCompilerId.c	/^void main() {}$/;"	f
 main	math/build/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^int main(int argc, char* argv[])$/;"	f
@@ -804,7 +824,8 @@ maxLengthBetweenEqualCharacters	lc/hash-table/lc-1624.cc	/^int maxLengthBetweenE
 maxProfit	lc/lc-122-sell-stock-II.py	/^    def maxProfit(self, prices: List[int]) -> int:$/;"	m	class:Solution
 maxProfit	lc/lc-309.py	/^    def maxProfit(self, prices: List[int]) -> int:$/;"	m	class:Solution
 maximalSquare	lc/lc-221.py	/^    def maximalSquare(self, matrix: List[List[str]]) -> int:$/;"	m	class:Solution
-maximum	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^TreeNode* BinarySearchTree::maximum(TreeNode* x) {$/;"	f	class:BinarySearchTree
+maximum	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^BSTreeNode *BinarySearchTree::maximum(BSTreeNode *x) {$/;"	f	class:BinarySearchTree
+maximum	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RBTreeNode *RedBlackTree::maximum(RBTreeNode *x) {$/;"	f	class:RedBlackTree
 maximumRobots	lc/dp_/lc-6143.py	/^    def maximumRobots(self, chargeTimes: List[int],$/;"	m	class:Solution
 maxn	lc/back-tracking/eight_queens_rest_method2.cpp	/^const int maxn = 10;$/;"	v
 maxn	math/sieve-method/sieve-method.cc	/^constexpr int maxn = 1e8+10;$/;"	v
@@ -817,7 +838,8 @@ minOperations	lc/6122.py	/^    def minOperations(self, nums: List[int], numsDivi
 minPathSum	lc/lc-64.py	/^    def minPathSum(self, grid: List[List[int]]) -> int:$/;"	m	class:Solution
 minStartValue	lc/lc-1413.cpp	/^int minStartValue(vector<int>& nums) {$/;"	f
 minSwap	lc/dp_/801.py	/^    def minSwap(self, nums1: List[int], nums2: List[int]) -> int:$/;"	m	class:Solution
-minimum	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^TreeNode* BinarySearchTree::minimum(TreeNode* x) {$/;"	f	class:BinarySearchTree
+minimum	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^BSTreeNode *BinarySearchTree::minimum(BSTreeNode *x) {$/;"	f	class:BinarySearchTree
+minimum	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RBTreeNode *RedBlackTree::minimum(RBTreeNode *x) {$/;"	f	class:RedBlackTree
 missingTwo	lc/lc-2783-find-2-disappear-numbers.py	/^    def missingTwo(self, nums: List[int]) -> List[int]:  # hash$/;"	m	class:Solution
 missingTwo1	lc/lc-2783-find-2-disappear-numbers.py	/^    def missingTwo1(self, nums: List[int]) -> List[int]:  # math$/;"	m	class:Solution
 missingTwo2	lc/lc-2783-find-2-disappear-numbers.py	/^    def missingTwo2(self, nums: List[int]) -> List[int]:  # math$/;"	m	class:Solution
@@ -852,6 +874,8 @@ next	c_cpp/Linked_List/Single_Linked_List.hpp	/^    ListNode* next;$/;"	m	struct
 next	lc/lc-92.cpp	/^    ListNode *next;$/;"	m	struct:ListNode	file:
 next	lc/linked-list-/24.cpp	/^    ListNode* next;$/;"	m	struct:ListNode	file:
 next	lc/test-cpp/LinkedList.cpp	/^    ListNode *next;$/;"	m	struct:ListNode	file:
+nil	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^auto RedBlackTree::nil = new RBTreeNode();$/;"	m	class:RedBlackTree	file:
+nil	c_cpp/Binary_Tree/rbt.h	/^    static RBTreeNode* nil;$/;"	m	class:RedBlackTree
 np	py/1.py	/^import numpy as np$/;"	i
 nthSuperUglyNumber	lc/lc-313.py	/^    def nthSuperUglyNumber(self, n: int, primes: List[int]) -> int:$/;"	m	class:Solution
 num	c_cpp/back-tracking/24-8-8-1000/8_8_1000.cpp	/^    double num; \/\/ 数字$/;"	m	struct:item	file:
@@ -879,6 +903,7 @@ operator /	math/高精度计算C++.cpp	/^    friend BigInt operator\/(const BigI
 operator <	math/高精度计算C++.cpp	/^    bool operator<(const BigInt &rhs) const {$/;"	f	class:BigInt
 operator <<	c_cpp/Binary_Tree/bst.h	/^ostream& operator<<(ostream& os, const vector<T>& v) {$/;"	f
 operator <<	c_cpp/Binary_Tree/bt.h	/^ostream& operator<<(ostream& os, const vector<T>& v) {$/;"	f
+operator <<	c_cpp/Binary_Tree/rbt.h	/^ostream& operator<<(ostream& os, const vector<T>& v) {$/;"	f
 operator <<	c_cpp/Linked_List/Single_Linked_List.hpp	/^ostream& operator<<(ostream& os, ListNode* lp) {$/;"	f
 operator <<	c_cpp/Sort/Heap_Sort.cpp	/^ostream &operator<<(ostream &os, vector<int> &v) {$/;"	f
 operator <<	c_cpp/Sort/Heap_Sort_reverse.cpp	/^ostream &operator<<(ostream &os, vector<int> &v) {$/;"	f
@@ -911,7 +936,8 @@ operator >>	math/高精度计算C++.cpp	/^    friend std::istream &operator>>(st
 operator []	c_cpp/Linked_List/Single_Linked_List.hpp	/^ListNode* LinkedList::operator[](int pos) {$/;"	f	class:LinkedList
 operator []	math/高精度计算C++.cpp	/^    Long &operator[](int index) const { return val[index]; }$/;"	f	class:BigInt	file:
 output	lc/back-tracking/eight_queens.cpp	/^void output() {$/;"	f
-parent	c_cpp/Binary_Tree/bst.h	/^    TreeNode* parent;$/;"	m	struct:TreeNode
+parent	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode* parent;$/;"	m	struct:BSTreeNode
+parent	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode* parent;$/;"	m	struct:RBTreeNode
 parent	c_cpp/Red_Black_Tree/rbt.cpp	/^    Node *parent;$/;"	m	struct:Node	file:
 parents	c_cpp/Graph_Theory/Union_Find_Set.cpp	/^    vector<int> parents;$/;"	m	class:UnionFind	file:
 peek	py/data_structure/Queue_by_2_stack.py	/^    def peek(self):$/;"	m	class:Queue2stack
@@ -963,7 +989,8 @@ pre_order_1	py/data_structure/AVL_tree.py	/^    def pre_order_1(self, node):$/;"
 pre_order_1	py/data_structure/Red-Black-tree.py	/^    def pre_order_1(self, node):$/;"	m	class:RBT
 pre_order_1	py/data_structure/binary-search-tree.py	/^    def pre_order_1(self, node):$/;"	m	class:BinarySearchTree
 pre_order_1	py/data_structure/binary_Tree.py	/^    def pre_order_1(self):$/;"	m	class:BinaryTree
-predecessor	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^TreeNode* BinarySearchTree::predecessor(TreeNode* x) {$/;"	f	class:BinarySearchTree
+predecessor	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^BSTreeNode *BinarySearchTree::predecessor(BSTreeNode *x) {$/;"	f	class:BinarySearchTree
+predecessor	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RBTreeNode *RedBlackTree::predecessor(RBTreeNode *x) {$/;"	f	class:RedBlackTree
 pri	math/sieve-method/sieve-method.cc	/^bitset<maxn> pri;$/;"	v
 prime	math/sieve-method/era-with-numpy.py	/^prime = array([], dtype=int64)  # save prime$/;"	v
 primes	math/sieve-method/sieve-method.cc	/^int primes[maxn];$/;"	v
@@ -984,6 +1011,7 @@ printResults	lc/back-tracking/n-queens.c	/^void printResults(time_t* pt1, time_t
 print_	py/class_rational_number.py	/^    def print_(self):$/;"	m	class:Rational
 print_Tree	py/data_structure/binary_Tree.py	/^    def print_Tree(self):$/;"	m	class:BinaryTree
 print_tree	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::print_tree() {$/;"	f	class:BinarySearchTree
+print_tree	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::print_tree(bool iscolor) {$/;"	f	class:RedBlackTree
 printable	lc/back-tracking/n-queens.c	/^void printable(int boardsize, int* aQueenBitRes, SOLUTIONTYPE numSolution) {$/;"	f
 printf	lc/test-py/test-1-args.py	/^def printf(a, *args):$/;"	f
 prod	lc/back-tracking/lc-17-phone-number.py	/^from math import prod$/;"	i
@@ -1014,22 +1042,27 @@ recur_1	py/data_structure/binary-search-tree.py	/^        def recur_1(node):$/;"
 recur_1	py/data_structure/binary_Tree.py	/^        def recur_1(node):$/;"	f	function:BinaryTree.in_order
 recur_2	py/data_structure/binary_Tree.py	/^        def recur_2(node):$/;"	f	function:BinaryTree.post_order
 reduce	py/factorial_loop.py	/^from functools import reduce$/;"	i
-remove	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::remove(TreeNode* z) {$/;"	f	class:BinarySearchTree
+remove	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::remove(BSTreeNode *z) {$/;"	f	class:BinarySearchTree
+remove	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::remove(RBTreeNode *z) {$/;"	f	class:RedBlackTree
 remove	c_cpp/Linked_List/Single_Linked_List.hpp	/^void LinkedList::remove(int val, int cnt) {$/;"	f	class:LinkedList
 remove	py/data_structure/double_link_list.py	/^    def remove(self, item):$/;"	m	class:DoubleLinkList
 remove	py/data_structure/single_cycle_link_list.py	/^    def remove(self, item):$/;"	m	class:SingleCycleLinkList
 remove	py/data_structure/single_link_list.py	/^    def remove(self, item):$/;"	m	class:SingleLinkList
-remove_1	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::remove_1(TreeNode* node) {$/;"	f	class:BinarySearchTree
+remove_1	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::remove_1(BSTreeNode *node) {$/;"	f	class:BinarySearchTree
+remove_1	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::remove_1(RBTreeNode *node) {$/;"	f	class:RedBlackTree
 res_str	c_cpp/back-tracking/24-8-8-1000/src-8-8-1000-1.cpp	/^string res_str[NUM];$/;"	v
 res_str	java/88-1000.java	/^static String[] res_str = new String[NUM];$/;"	f	class:Main
 result	py/manacher.py	/^result = manacher(s)$/;"	v
 reverseBetween	lc/lc-92.cpp	/^    ListNode *reverseBetween(ListNode *head, int left, int right) {$/;"	f	class:Solution
 reverseList	c_cpp/Linked_List/Reverse_Singly_linked_list.cpp	/^ListNode *reverseList(ListNode *head) {$/;"	f
-right	c_cpp/Binary_Tree/bst.h	/^    TreeNode* right;$/;"	m	struct:TreeNode
+right	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode* right;$/;"	m	struct:BSTreeNode
 right	c_cpp/Binary_Tree/bt.h	/^    TreeNode* right;$/;"	m	struct:TreeNode
+right	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode* right;$/;"	m	struct:RBTreeNode
 right	c_cpp/Red_Black_Tree/rbt.cpp	/^    Node *right;$/;"	m	struct:Node	file:
-root	c_cpp/Binary_Tree/bst.h	/^    TreeNode* root;$/;"	m	class:BinarySearchTree
+right_rotate	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::right_rotate(RBTreeNode *y) {$/;"	f	class:RedBlackTree
+root	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode* root;$/;"	m	class:BinarySearchTree
 root	c_cpp/Binary_Tree/bt.h	/^    TreeNode* root;$/;"	m	class:BinaryTree
+root	c_cpp/Binary_Tree/rbt.h	/^    RBTreeNode* root;$/;"	m	class:RedBlackTree
 root	c_cpp/Red_Black_Tree/rbt.cpp	/^    Node *root;$/;"	m	class:RedBlackTree	file:
 rotateLeft	c_cpp/Red_Black_Tree/rbt.cpp	/^    void rotateLeft(Node *node) {$/;"	f	class:RedBlackTree
 rotateRight	c_cpp/Red_Black_Tree/rbt.cpp	/^    void rotateRight(Node *node) {$/;"	f	class:RedBlackTree
@@ -1090,7 +1123,8 @@ s1	lc/str_/KMP.py	/^    s1 = "aabaabaaf"$/;"	v
 s2	lc/str_/KMP.py	/^    s2 = "aabaaf"$/;"	v
 say	lc/look-and-say.py	/^    def say(s):$/;"	f	function:A005150
 scll	py/data_structure/single_cycle_link_list.py	/^    scll = SingleCycleLinkList()$/;"	v	class:SingleCycleLinkList
-search	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^TreeNode* BinarySearchTree::search(int target) { return _search(root, target); }$/;"	f	class:BinarySearchTree
+search	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^BSTreeNode *BinarySearchTree::search(int target) {$/;"	f	class:BinarySearchTree
+search	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RBTreeNode *RedBlackTree::search(int target) { return _search(root, target); }$/;"	f	class:RedBlackTree
 search	py/data_structure/double_link_list.py	/^    def search(self, item):$/;"	m	class:DoubleLinkList
 search	py/data_structure/single_cycle_link_list.py	/^    def search(self, item):$/;"	m	class:SingleCycleLinkList
 search	py/data_structure/single_link_list.py	/^    def search(self, item):$/;"	m	class:SingleLinkList
@@ -1124,7 +1158,8 @@ sqrt	lc/lc-2783-find-2-disappear-numbers.py	/^from math import sqrt$/;"	i
 sqrtByLongDivision	math/calc_sqrt_by_long_div.cpp	/^int sqrtByLongDivision(int n) {$/;"	f
 st	py/data_structure/monotonous_stack.py	/^st = []$/;"	v
 std	math/long_division_with_gmp.c	/^using namespace std;$/;"	v
-successor	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^TreeNode* BinarySearchTree::successor(TreeNode* x) {$/;"	f	class:BinarySearchTree
+successor	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^BSTreeNode *BinarySearchTree::successor(BSTreeNode *x) {$/;"	f	class:BinarySearchTree
+successor	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RBTreeNode *RedBlackTree::successor(RBTreeNode *x) {$/;"	f	class:RedBlackTree
 sum	lc/back-tracking/eight_queens_rest_method1.cpp	/^double map[8][8], sum = 0, msum = 0;$/;"	v
 sum_	py/recursion/num_sum.py	/^def sum_(n):$/;"	f
 swap	c_cpp/back-tracking/24-8-8-1000/8_8_1000.cpp	/^void swap(int i, int j) {$/;"	f
@@ -1133,8 +1168,10 @@ swap	c_cpp/bit-ops/swap_by_xor.cpp	/^void swap(int &a, int &b) { a ^= b ^= a ^= 
 swap	math/高精度计算C++.cpp	/^    void swap(const BigInt &rhs) const {$/;"	f	class:BigInt
 swapPairs	lc/linked-list-/24.cpp	/^    ListNode* swapPairs(ListNode* head) {$/;"	f	class:Solution
 t0	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void t0() {$/;"	f
+t0	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void t0() {$/;"	f
 t0	math/long_division_with_gmp.c	/^void t0() {$/;"	f
 t1	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void t1() {$/;"	f
+t1	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void t1() {$/;"	f
 t1	c_cpp/Red_Black_Tree/rbt.cpp	/^void t1(){}$/;"	f
 t1	c_cpp/Sort/Heap_Sort.cpp	/^void t1() {$/;"	f
 t1	c_cpp/Sort/Heap_Sort_reverse.cpp	/^void t1() {$/;"	f
@@ -1197,7 +1234,8 @@ timer4	py/data_structure/timeit_list.py	/^timer4 = Timer("test4()", "from __main
 timer5	py/data_structure/timeit_list.py	/^timer5 = Timer("test5()", "from __main__ import test5")$/;"	v
 times	c_cpp/back-tracking/24-8-8-1000/src-8-8-1000-1.cpp	/^int times = 0;$/;"	v
 times	java/88-1000.java	/^static int times = 0;$/;"	f	class:Main
-transplant	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::transplant(TreeNode* u, TreeNode* v) {$/;"	f	class:BinarySearchTree
+transplant	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::transplant(BSTreeNode *u, BSTreeNode *v) {$/;"	f	class:BinarySearchTree
+transplant	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::transplant(RBTreeNode *u, RBTreeNode *v) {$/;"	f	class:RedBlackTree
 travel	py/data_structure/double_link_list.py	/^    def travel(self):$/;"	m	class:DoubleLinkList
 travel	py/data_structure/single_cycle_link_list.py	/^    def travel(self):$/;"	m	class:SingleCycleLinkList
 travel	py/data_structure/single_link_list.py	/^    def travel(self):$/;"	m	class:SingleLinkList
@@ -1206,8 +1244,9 @@ trim	math/高精度计算C++.cpp	/^    void trim() const {$/;"	f	class:BigInt	fi
 union	lc/hash-table/lc-128.py	/^        def union(i, j):$/;"	f	function:Solution.longestConsecutive
 union	py/find-and-union-set/find-union-set.py	/^def union(i, j):$/;"	f
 updateMatrix	lc/dfs_bfs/542-0-1-mat.py	/^    def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:$/;"	m	class:Solution
-val	c_cpp/Binary_Tree/bst.h	/^    int val;$/;"	m	struct:TreeNode
+val	c_cpp/Binary_Tree/bst.h	/^    int val;$/;"	m	struct:BSTreeNode
 val	c_cpp/Binary_Tree/bt.h	/^    int val;$/;"	m	struct:TreeNode
+val	c_cpp/Binary_Tree/rbt.h	/^    int val;$/;"	m	struct:RBTreeNode
 val	c_cpp/Linked_List/Reverse_Singly_linked_list.cpp	/^    int val;$/;"	m	struct:ListNode	file:
 val	c_cpp/Linked_List/Single_Linked_List.hpp	/^    int val;$/;"	m	struct:ListNode
 val	c_cpp/Red_Black_Tree/rbt.cpp	/^    int val;$/;"	m	struct:Node	file:
@@ -1231,3 +1270,4 @@ zeroFilledSubarray	lc/6129.py	/^    def zeroFilledSubarray(self, nums: List[int]
 ~BinarySearchTree	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^BinarySearchTree::~BinarySearchTree() {$/;"	f	class:BinarySearchTree
 ~BinaryTree	c_cpp/Binary_Tree/Binary_Tree.cpp	/^BinaryTree::~BinaryTree() {$/;"	f	class:BinaryTree
 ~LinkedList	c_cpp/Linked_List/Single_Linked_List.hpp	/^LinkedList::~LinkedList() {$/;"	f	class:LinkedList
+~RedBlackTree	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RedBlackTree::~RedBlackTree() {$/;"	f	class:RedBlackTree

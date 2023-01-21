@@ -1,10 +1,12 @@
-#include "bst.h"
+#include "rbt.h"
 
-BinarySearchTree::~BinarySearchTree() {
-    function<void(BSTreeNode *)> f = [&](BSTreeNode *node) {
-        if (!node) return;
-        BSTreeNode *Left_Tree = node->left;
-        BSTreeNode *Right_Tree = node->right;
+auto RedBlackTree::nil = new RBTreeNode();
+
+RedBlackTree::~RedBlackTree() {
+    function<void(RBTreeNode *)> f = [&](RBTreeNode *node) {
+        if (!node || node == RedBlackTree::nil) return;
+        RBTreeNode *Left_Tree = node->left;
+        RBTreeNode *Right_Tree = node->right;
         cout << node->val << " ";
         delete node;
         if (Left_Tree) f(Left_Tree);
@@ -14,62 +16,13 @@ BinarySearchTree::~BinarySearchTree() {
     cout << " deleted..\n";
 }
 
-void BinarySearchTree::build_from_array(vector<int> &items) {
-    if (items.empty()) return;
-    // 有序数组构建二叉搜索树
-    sort(items.begin(), items.end());
-    function<BSTreeNode *(int, int)> f = [&](int l, int r) {
-        if (l > r) return (BSTreeNode *)nullptr;
-        int mid = l + (r - l) / 2;
-        return new BSTreeNode(items[mid], f(l, mid - 1), f(mid + 1, r));
-    };
-    // 迭代
-    function<BSTreeNode *(void)> g = [&]() {
-        if (items.empty()) return (BSTreeNode *)nullptr;
-
-        BSTreeNode *tmp_root = new BSTreeNode();
-        queue<BSTreeNode *> nodeQue;
-        queue<int> leftQue, rightQue;
-        nodeQue.push(tmp_root);
-        leftQue.push(0);
-        rightQue.push(items.size() - 1);
-
-        while (!nodeQue.empty()) {
-            auto cur = nodeQue.front();
-            nodeQue.pop();
-            int L = leftQue.front();
-            leftQue.pop();
-            int R = rightQue.front();
-            rightQue.pop();
-
-            int mid = L + (R - L) / 2;
-            cur->val = items[mid]; // 赋值
-            if (L < mid) {
-                cur->left = new BSTreeNode();
-                nodeQue.push(cur->left);
-                leftQue.push(L);
-                rightQue.push(mid - 1);
-            }
-            if (R > mid) {
-                cur->right = new BSTreeNode();
-                nodeQue.push(cur->right);
-                leftQue.push(mid + 1);
-                rightQue.push(R);
-            }
-        }
-        return tmp_root;
-    };
-    /* root = f(0, items.size() - 1); */
-    root = g();
-}
-
-void BinarySearchTree::breadth_travel() {
+void RedBlackTree::breadth_travel() {
     if (!root) return;
-    queue<BSTreeNode *> que;
+    queue<RBTreeNode *> que;
     que.push(root);
     vector<int> ret;
     while (!que.empty()) {
-        BSTreeNode *cur = que.front();
+        RBTreeNode *cur = que.front();
         que.pop();
         ret.emplace_back(cur->val);
 
@@ -79,9 +32,9 @@ void BinarySearchTree::breadth_travel() {
     cout << ret;
 }
 
-void BinarySearchTree::print_tree() {
+void RedBlackTree::print_tree(bool iscolor) {
     if (!root) return;
-    queue<BSTreeNode *> q;
+    queue<RBTreeNode *> q;
     q.push(root);
     int m = 0;
     while (!q.empty()) {
@@ -97,15 +50,16 @@ void BinarySearchTree::print_tree() {
     int n = (1 << m) - 1;
     vector<vector<string>> ans(m, vector<string>(n, " "));
     vector<vector<string>> branch(m, vector<string>(n, " "));
-    queue<tuple<int, int, BSTreeNode *, string>> bq;
+    queue<tuple<int, int, RBTreeNode *, string>> bq;
     bq.push({0, (n - 1) / 2, root, ""s});
     while (!bq.empty()) {
         int bqs = bq.size();
         for (auto i = 0; i < bqs; i++) {
             auto &[r, c, cur, slash] = bq.front();
             bq.pop();
-            if (!cur->val) continue;
-            ans[r][c] = to_string(cur->val);
+            if (!cur->val) continue; // 表示不打印nil节点
+            // 打印值或颜色
+            ans[r][c] = to_string(iscolor ? cur->color : cur->val);
             if (r == m - 1) {
                 branch[r][c] = slash;
             } else {
@@ -128,22 +82,10 @@ void BinarySearchTree::print_tree() {
     }
 }
 
-void BinarySearchTree::in_order_recur() {
-    vector<int> ret;
-    function<void(BSTreeNode *)> f = [&](BSTreeNode *node) {
-        if (!node) return;
-
-        f(node->left);
-        ret.emplace_back(node->val);
-        f(node->right);
-    };
-    f(root);
-    cout << ret;
-}
-void BinarySearchTree::in_order_iter() {
+void RedBlackTree::in_order() {
     if (!root) return;
     vector<int> ret;
-    stack<BSTreeNode *> st;
+    stack<RBTreeNode *> st;
     auto cur = root;
     while (!st.empty() || cur) {
         if (cur) {
@@ -159,36 +101,36 @@ void BinarySearchTree::in_order_iter() {
     cout << ret;
 }
 
-BSTreeNode *BinarySearchTree::maximum(BSTreeNode *x) {
+RBTreeNode *RedBlackTree::maximum(RBTreeNode *x) {
     while (x->right) x = x->right;
     return x;
 }
 
-BSTreeNode *BinarySearchTree::minimum(BSTreeNode *x) {
+RBTreeNode *RedBlackTree::minimum(RBTreeNode *x) {
     while (x->left) x = x->left;
     return x;
 }
 
-int BinarySearchTree::MAX() { return maximum(root)->val; }
-int BinarySearchTree::MIN() { return minimum(root)->val; }
+int RedBlackTree::MAX() { return maximum(root)->val; }
+int RedBlackTree::MIN() { return minimum(root)->val; }
 
-BSTreeNode *BinarySearchTree::successor(BSTreeNode *x) {
+RBTreeNode *RedBlackTree::successor(RBTreeNode *x) {
     // 如果结点x的右子树非空, 则x后继结点就是其右子树的最左节点(minimum)
     if (x->right) return minimum(x->right);
-    BSTreeNode *y = x->parent;
+    RBTreeNode *y = x->parent;
     // 如果x右子树为空且其后继结点存在, 则其后继就是x的有左孩子的最底层祖先
     while (y && x == y->right) x = y, y = y->parent;
     return y;
 }
 
-BSTreeNode *BinarySearchTree::predecessor(BSTreeNode *x) {
+RBTreeNode *RedBlackTree::predecessor(RBTreeNode *x) {
     if (x->left) return maximum(x->left);
-    BSTreeNode *y = x->parent;
+    RBTreeNode *y = x->parent;
     while (y && x == y->left) x = y, y = y->parent;
     return y;
 }
 
-BSTreeNode *BinarySearchTree::_search(BSTreeNode *x, int target) {
+RBTreeNode *RedBlackTree::_search(RBTreeNode *x, int target) {
     /* if (!x || target == x->val) return x; */
     /* if (target < x->val) */
     /*     return _search(x->left, target); */
@@ -199,18 +141,91 @@ BSTreeNode *BinarySearchTree::_search(BSTreeNode *x, int target) {
             x = x->left;
         else
             x = x->right;
-    /* cout << x << endl; */
     return x;
 }
 
-BSTreeNode *BinarySearchTree::search(int target) {
-    return _search(root, target);
+RBTreeNode *RedBlackTree::search(int target) { return _search(root, target); }
+
+
+void RedBlackTree::left_rotate(RBTreeNode *x) {
+    auto y = x->right;
+    x->right = y->left;
+    if (RedBlackTree::nil != y->left) y->left->parent = x;
+    y->parent = x->parent;
+    if (RedBlackTree::nil == x->parent)
+        root = y;
+    else if (x->parent->left == x)
+        x->parent->left = y;
+    else
+        x->parent->right = y;
+    y->left = x;
+    x->parent = y;
 }
 
-void BinarySearchTree::insert(int item) {
+void RedBlackTree::right_rotate(RBTreeNode *y) {
+    auto x = y->left;
+    y->left = x->right;
+    if (RedBlackTree::nil != x->right) x->right->parent = y;
+    x->parent = y->parent;
+    if (RedBlackTree::nil == y->parent)
+        root = x;
+    else if (y->parent->left == y)
+        y->parent->left = x;
+    else
+        y->parent->right = x;
+    x->right = y;
+    y->parent = x;
+}
+
+
+void RedBlackTree::insert_fixup(RBTreeNode *z) {
+    // 插入节点修正
+    // 只要z的父节点是红色就进行操作
+    while (!z->parent->color) {
+        // z的父节点是其祖父节点的左子结点
+        if (z->parent == z->parent->parent->left) {
+            // y是z祖父节点的右孩子, 叔结点
+            auto y = z->parent->parent->right;
+            if (!y->color) {
+                // y 红色, case1
+                z->parent->color = true;
+                y->color = true;
+                z->parent->parent->color = false;
+                // 更新当前节点z, 变为其祖父节点
+                z = z->parent->parent;
+                continue;
+            } else if (z == z->parent->right) {
+                z = z->parent;
+                left_rotate(z);
+            }
+            z->parent->color = true;
+            z->parent->parent->color = false;
+            right_rotate(z->parent->parent);
+        } else {
+            auto y = z->parent->parent->left;
+            if (!y->color) {
+                z->parent->color = true;
+                y->color = true;
+                z->parent->parent->color = false;
+                z = z->parent->parent;
+                continue;
+            } else if (z == z->parent->left) {
+                z = z->parent;
+                right_rotate(z);
+            }
+            z->parent->color = true;
+            z->parent->parent->color = false;
+            left_rotate(z->parent->parent);
+        }
+    }
+    root->color = true;
+}
+
+void RedBlackTree::insert(int item) {
     // 循环插入结点构建二叉搜索树, 但是容易退化成链表(不具备平衡性)
-    BSTreeNode *y{}, *x = root, *z = new BSTreeNode(item);
-    while (x) {
+    auto y = RedBlackTree::nil, x = root;
+    auto z = new RBTreeNode(item);
+    while (x && x != RedBlackTree::nil) {
         y = x;
         if (item < x->val)
             x = x->left;
@@ -218,15 +233,19 @@ void BinarySearchTree::insert(int item) {
             x = x->right;
     }
     z->parent = y;
-    if (!y)
+    if (RedBlackTree::nil == y)
         root = z;
     else if (item < y->val)
         y->left = z;
     else
         y->right = z;
+    z->left = RedBlackTree::nil;
+    z->right = RedBlackTree::nil;
+    z->color = false;
+    insert_fixup(z); // 只比BST多了这一步
 }
 
-void BinarySearchTree::remove_1(BSTreeNode *node) {
+void RedBlackTree::remove_1(RBTreeNode *node) {
     // case 1: 无子树
     if (!node->left && !node->right) {
         auto parent = node->parent;
@@ -285,7 +304,7 @@ void BinarySearchTree::remove_1(BSTreeNode *node) {
     }
 }
 
-void BinarySearchTree::transplant(BSTreeNode *u, BSTreeNode *v) {
+void RedBlackTree::transplant(RBTreeNode *u, RBTreeNode *v) {
     // 用以v为根的子树替换以u为根的子树
     // 允许v空
     if (!u->parent)
@@ -301,7 +320,7 @@ void BinarySearchTree::transplant(BSTreeNode *u, BSTreeNode *v) {
     if (v) v->parent = u->parent;
 }
 
-void BinarySearchTree::remove(BSTreeNode *z) {
+void RedBlackTree::remove(RBTreeNode *z) {
     if (!z->left) // 没有左子树, 右子树可有可无
         transplant(z, z->right);
     else if (!z->right) // 没有右子树, 有左子树
@@ -324,72 +343,41 @@ void BinarySearchTree::remove(BSTreeNode *z) {
 }
 
 void t1() {
-    BinarySearchTree tree;
+    RedBlackTree tree;
     vector<int> nodes{15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9};
-    /* vector<int> nodes{2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20}; */
-
-    /* for (int i : nodes) tree.insert(i); */
-    for (int i : nodes) {
-        tree.insert(i);
-        tree.print_tree();
-    }
-
-    /* cout << "breadth_travel: \n"; */
+    for (int i : nodes) tree.insert(i);
+    cout << "breadth_travel: \n";
     tree.print_tree();
-    /* tree.breadth_travel(); */
+    tree.breadth_travel();
     int node1{15};
     cout << "delete node: " << node1 << endl;
     tree.remove(tree.search(node1));
     /* tree.remove(tree.search(4)); */
     /* tree.remove(tree.search(3)); */
     tree.print_tree();
-    /* tree.breadth_travel(); */
+    tree.breadth_travel();
 }
 
 void t0() {
-    BinarySearchTree tree;
-    vector<int> nodes{15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9};
-    // 方法一
-    // 严格递增序列, 这样构建的树一定是高度为n-1的一条链
-    // 退化成链表, 所以需要有平衡性的限制(AVL, RBT)
+    RedBlackTree tree;
+    vector<int> nodes{1};
+    /* vector<int> nodes{1, 2, 4, 5, 7, 8, 11, 14, 15}; */
+    /* vector<int> nodes{15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9}; */
     /* sort(nodes.begin(), nodes.end()); */
-    for (int i : nodes) tree.insert(i);
-    /* for (int i{1}; i < 8; ++i) tree.insert(i); */
-    // 方法二: 数组构建二叉搜索树, 这种方法出来的一定是平衡的
-    // 但是没有处理父节点指针
-    /* vector<int> arr = {1, 2, 3, 4, 5, 6, 7}; */
-    /* tree.build_from_array(nodes); */
+    /* vector<int> nodes{2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20}; */
+    for (int i : nodes) {
+        tree.insert(i);
+        tree.print_tree();
+    }
 
-    tree.breadth_travel();
-    cout << "BST is :\n";
-    tree.in_order_recur();
-
-    cout << "MAX of the BST is " << tree.MAX() << endl;
-    cout << "MIN of the BST is " << tree.MIN() << endl;
-
-    auto n1 = tree.search(6);
-    cout << "maximum in tree(6) is " << tree.maximum(n1)->val << endl;
-    cout << "minimum in tree(6) is " << tree.minimum(n1)->val << endl;
-
-    auto node = tree.search(13);
-    int suc = tree.successor(node)->val;
-    int pre = tree.predecessor(node)->val;
-    cout << "suc of 13 is " << suc << endl;
-    cout << "pre of 13 is " << pre << endl;
-    /* [15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9]  */
-    /* BST is : */
-    /* [2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20]  */
-    /* MAX of the BST is 20 */
-    /* MIN of the BST is 2 */
-    /* maximum in tree(6) is 13 */
-    /* minimum in tree(6) is 2 */
-    /* suc of 13 is 15 */
-    /* pre of 13 is 9 */
-    /* 15 6 3 2 4 7 13 9 18 17 20  deleted.. */
+    /* tree.breadth_travel(); */
+    cout << "RBT is: \n";
+    /* tree.in_order(); */
+    tree.print_tree(true);
 }
 
 int main(int argc, char const *argv[]) {
-    /* t0(); */
-    t1();
+    t0();
+    /* t1(); */
     return 0;
 }

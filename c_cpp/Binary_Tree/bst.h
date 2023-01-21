@@ -7,6 +7,7 @@
 #include <vector>
 #include <tuple>
 #include <cmath>
+#include <algorithm>
 #include <functional> // 递归lambda
 
 
@@ -23,16 +24,17 @@ ostream& operator<<(ostream& os, const vector<T>& v) {
     return os;
 }
 
-struct TreeNode {
+struct BSTreeNode {
     int val;
-    TreeNode* left;
-    TreeNode* right;
+    BSTreeNode* left;
+    BSTreeNode* right;
     // used by remove and insert
-    TreeNode* parent;
+    BSTreeNode* parent;
 
-    TreeNode() : val(0), left(nullptr), right(nullptr), parent(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr), parent(nullptr) {}
-    TreeNode(int x, TreeNode* left1, TreeNode* right1)
+    BSTreeNode() : val(0), left(nullptr), right(nullptr), parent(nullptr) {}
+    BSTreeNode(int x)
+        : val(x), left(nullptr), right(nullptr), parent(nullptr) {}
+    BSTreeNode(int x, BSTreeNode* left1, BSTreeNode* right1)
         : val(x), left(left1), right(right1), parent(nullptr) {}
 };
 
@@ -48,23 +50,23 @@ public:
     void in_order_recur(); // 顺序输出
     void in_order_iter();  // 顺序输出
     // 以结点x为根的树的最大节点,最小节点
-    TreeNode* maximum(TreeNode*);
-    TreeNode* minimum(TreeNode*);
+    BSTreeNode* maximum(BSTreeNode*);
+    BSTreeNode* minimum(BSTreeNode*);
     // 整个树的最大值最小值
     int MAX();
     int MIN();
     // 前驱节点,后继结点
-    TreeNode* predecessor(TreeNode*);
-    TreeNode* successor(TreeNode*);
+    BSTreeNode* predecessor(BSTreeNode*);
+    BSTreeNode* successor(BSTreeNode*);
     // 树结点的查找, 添加和删除
-    TreeNode* search(int);
+    BSTreeNode* search(int);
     void insert(int);
-    void remove_1(TreeNode*);
-    void remove(TreeNode*);
+    void remove_1(BSTreeNode*);
+    void remove(BSTreeNode*);
 
 private:
-    TreeNode* root;
-    TreeNode* _search(TreeNode*, int);
-    void transplant(TreeNode*, TreeNode*);
+    BSTreeNode* root;
+    BSTreeNode* _search(BSTreeNode*, int);
+    void transplant(BSTreeNode*, BSTreeNode*);
 };
 #endif
