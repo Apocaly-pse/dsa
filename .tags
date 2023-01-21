@@ -553,6 +553,7 @@ dec2x	py/bit_ops/system_convert.py	/^def dec2x(x: int, k: int) -> str:$/;"	f
 defaultdict	lc/back-tracking/332.py	/^from collections import defaultdict$/;"	i
 defaultdict	lc/lc-1224.py	/^from collections import Counter, defaultdict$/;"	i
 defaultdict	lc/utils1.py	/^from collections import deque, defaultdict, Counter$/;"	i
+delete_fixup	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::delete_fixup(RBTreeNode *x) {$/;"	f	class:RedBlackTree
 deque	lc/dfs_bfs/1162.py	/^from collections import deque$/;"	i
 deque	lc/dfs_bfs/542-0-1-mat.py	/^from collections import deque$/;"	i
 deque	lc/utils1.py	/^from collections import deque, defaultdict, Counter$/;"	i
@@ -874,7 +875,7 @@ next	c_cpp/Linked_List/Single_Linked_List.hpp	/^    ListNode* next;$/;"	m	struct
 next	lc/lc-92.cpp	/^    ListNode *next;$/;"	m	struct:ListNode	file:
 next	lc/linked-list-/24.cpp	/^    ListNode* next;$/;"	m	struct:ListNode	file:
 next	lc/test-cpp/LinkedList.cpp	/^    ListNode *next;$/;"	m	struct:ListNode	file:
-nil	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^auto RedBlackTree::nil = new RBTreeNode();$/;"	m	class:RedBlackTree	file:
+nil	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^RBTreeNode *RedBlackTree::nil = new RBTreeNode();$/;"	m	class:RedBlackTree	file:
 nil	c_cpp/Binary_Tree/rbt.h	/^    static RBTreeNode* nil;$/;"	m	class:RedBlackTree
 np	py/1.py	/^import numpy as np$/;"	i
 nthSuperUglyNumber	lc/lc-313.py	/^    def nthSuperUglyNumber(self, n: int, primes: List[int]) -> int:$/;"	m	class:Solution
@@ -1011,7 +1012,7 @@ printResults	lc/back-tracking/n-queens.c	/^void printResults(time_t* pt1, time_t
 print_	py/class_rational_number.py	/^    def print_(self):$/;"	m	class:Rational
 print_Tree	py/data_structure/binary_Tree.py	/^    def print_Tree(self):$/;"	m	class:BinaryTree
 print_tree	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::print_tree() {$/;"	f	class:BinarySearchTree
-print_tree	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::print_tree(bool iscolor) {$/;"	f	class:RedBlackTree
+print_tree	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::print_tree(bool iscolor, bool show_nil) {$/;"	f	class:RedBlackTree
 printable	lc/back-tracking/n-queens.c	/^void printable(int boardsize, int* aQueenBitRes, SOLUTIONTYPE numSolution) {$/;"	f
 printf	lc/test-py/test-1-args.py	/^def printf(a, *args):$/;"	f
 prod	lc/back-tracking/lc-17-phone-number.py	/^from math import prod$/;"	i

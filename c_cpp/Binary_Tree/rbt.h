@@ -46,9 +46,9 @@ public:
     RedBlackTree() : root(nullptr) {}
     ~RedBlackTree();
     // 遍历部分
-    void breadth_travel();         // bfs
-    void print_tree(bool = false); // bfs
-    void in_order();               // 顺序输出
+    void breadth_travel();                       // bfs
+    void print_tree(bool = false, bool = false); // bfs
+    void in_order();                             // 顺序输出
     // rotate
     void left_rotate(RBTreeNode*);
     void right_rotate(RBTreeNode*);
@@ -71,6 +71,7 @@ private:
     RBTreeNode* root;
     static RBTreeNode* nil;
     void insert_fixup(RBTreeNode*);
+    void delete_fixup(RBTreeNode*);
     RBTreeNode* _search(RBTreeNode*, int);
     void transplant(RBTreeNode*, RBTreeNode*);
 };
