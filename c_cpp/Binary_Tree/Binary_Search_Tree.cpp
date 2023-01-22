@@ -104,7 +104,7 @@ void BinarySearchTree::print_tree() {
         for (auto i = 0; i < bqs; i++) {
             auto &[r, c, cur, slash] = bq.front();
             bq.pop();
-            if (!cur->val) continue;
+            if (!cur) continue;
             ans[r][c] = to_string(cur->val);
             if (r == m - 1) {
                 branch[r][c] = slash;
@@ -318,9 +318,9 @@ void BinarySearchTree::remove(BSTreeNode *z) {
         transplant(z, y);
         y->left = z->left;
         y->left->parent = y;
-        delete z;
-        z = nullptr;
     }
+    delete z;
+    z = nullptr;
 }
 
 void t1() {

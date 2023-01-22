@@ -373,9 +373,8 @@ void RedBlackTree::delete_fixup(RBTreeNode *x) {
 }
 
 void RedBlackTree::remove(RBTreeNode *z) {
-    auto y = z;
     RBTreeNode *x{};
-    bool y_origin_color = y->color;
+    bool y_origin_color = z->color;
     if (z->left == RedBlackTree::nil) { // 没有左子树, 右子树可有可无
         x = z->right;
         transplant(z, z->right);
@@ -385,7 +384,7 @@ void RedBlackTree::remove(RBTreeNode *z) {
     } else { // 左右子树均存在且不为空
         // 查找z的后继
         /*因为z右子树非空, 所以后继一定是该子树的最小节点*/
-        y = minimum(z->right);
+        auto y = minimum(z->right);
         y_origin_color = y->color;
         x = y->right;
         if (y->parent == z)
@@ -399,9 +398,10 @@ void RedBlackTree::remove(RBTreeNode *z) {
         y->left = z->left;
         y->left->parent = y;
         y->color = z->color;
-        /* delete z; */
-        /* z = nullptr; */
     }
+    delete z;
+    z = nullptr;
+    // 待删除节点是黑节点才修正红黑树
     if (y_origin_color) delete_fixup(x);
 }
 
@@ -424,6 +424,29 @@ void t1() {
     /* tree.remove(tree.search(3)); */
     tree.print_tree();
 }
+
+/*                15                */
+/*         /             \         */
+/*        6               18        */
+/*     /     \         /     \     */
+/*    3       9       17       20    */
+/*   / \     / \                   */
+/*  2   4   7   13                  */
+/*                                 */
+/*                                 */
+/* delete node: 15 */
+/*                                */
+/*                17                */
+/*         /             \         */
+/*        6               18        */
+/*     /     \               \     */
+/*    3       9               20    */
+/*   / \     / \                   */
+/*  2   4   7   13                  */
+/*                                 */
+/*                                 */
+/* 17 6 3 2 4 9 7 13 18 20  deleted.. */
+
 
 void t0() {
     RedBlackTree tree;

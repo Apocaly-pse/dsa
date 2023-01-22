@@ -31,11 +31,10 @@ struct BSTreeNode {
     // used by remove and insert
     BSTreeNode* parent;
 
-    BSTreeNode() : val(0), left(nullptr), right(nullptr), parent(nullptr) {}
-    BSTreeNode(int x)
-        : val(x), left(nullptr), right(nullptr), parent(nullptr) {}
     BSTreeNode(int x, BSTreeNode* left1, BSTreeNode* right1)
-        : val(x), left(left1), right(right1), parent(nullptr) {}
+        : val(x), left(left1), right(right1) {}
+    BSTreeNode() : BSTreeNode(0, nullptr, nullptr) {}
+    BSTreeNode(int x) : BSTreeNode(x, nullptr, nullptr) {}
 };
 
 class BinarySearchTree {

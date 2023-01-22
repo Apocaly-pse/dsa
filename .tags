@@ -17,8 +17,8 @@ Ank	py/combinatorial_number.py	/^def Ank(n, k):$/;"	f
 At	math/高精度计算C++.cpp	/^#define At(/;"	d	file:
 BLACK	c_cpp/Red_Black_Tree/rbt.cpp	/^const bool BLACK = false;$/;"	v
 BSTREE	c_cpp/Binary_Tree/bst.h	/^#define BSTREE$/;"	d
-BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode() : val(0), left(nullptr), right(nullptr), parent(nullptr) {}$/;"	f	struct:BSTreeNode
-BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode(int x)$/;"	f	struct:BSTreeNode
+BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode() : BSTreeNode(0, nullptr, nullptr) {}$/;"	f	struct:BSTreeNode
+BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode(int x) : BSTreeNode(x, nullptr, nullptr) {}$/;"	f	struct:BSTreeNode
 BSTreeNode	c_cpp/Binary_Tree/bst.h	/^    BSTreeNode(int x, BSTreeNode* left1, BSTreeNode* right1)$/;"	f	struct:BSTreeNode
 BSTreeNode	c_cpp/Binary_Tree/bst.h	/^struct BSTreeNode {$/;"	s
 BTREE	c_cpp/Binary_Tree/bt.h	/^#define BTREE$/;"	d
