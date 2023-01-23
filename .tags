@@ -1050,7 +1050,6 @@ remove	py/data_structure/double_link_list.py	/^    def remove(self, item):$/;"	m
 remove	py/data_structure/single_cycle_link_list.py	/^    def remove(self, item):$/;"	m	class:SingleCycleLinkList
 remove	py/data_structure/single_link_list.py	/^    def remove(self, item):$/;"	m	class:SingleLinkList
 remove_1	c_cpp/Binary_Tree/Binary_Search_Tree.cpp	/^void BinarySearchTree::remove_1(BSTreeNode *node) {$/;"	f	class:BinarySearchTree
-remove_1	c_cpp/Binary_Tree/Red_Black_Tree.cpp	/^void RedBlackTree::remove_1(RBTreeNode *node) {$/;"	f	class:RedBlackTree
 res_str	c_cpp/back-tracking/24-8-8-1000/src-8-8-1000-1.cpp	/^string res_str[NUM];$/;"	v
 res_str	java/88-1000.java	/^static String[] res_str = new String[NUM];$/;"	f	class:Main
 result	py/manacher.py	/^result = manacher(s)$/;"	v

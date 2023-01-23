@@ -64,7 +64,6 @@ public:
     // 树结点的查找, 添加和删除
     RBTreeNode* search(int);
     void insert(int);
-    void remove_1(RBTreeNode*);
     void remove(RBTreeNode*);
 
 private:

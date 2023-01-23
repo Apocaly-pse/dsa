@@ -1,5 +1,4 @@
 #include "rbt.h"
-#include <chrono>
 
 RBTreeNode *RedBlackTree::nil = new RBTreeNode();
 
@@ -14,21 +13,41 @@ RedBlackTree::~RedBlackTree() {
         if (Right_Tree) f(Right_Tree);
     };
     f(root);
-    cout << " deleted..\n";
+    delete RedBlackTree::nil;
+    cout << "nil deleted..\n";
 }
 
 void RedBlackTree::breadth_travel() {
-    if (!root) return;
+    if (!root || root == RedBlackTree::nil) return;
     queue<RBTreeNode *> que;
     que.push(root);
     vector<int> ret;
     while (!que.empty()) {
         RBTreeNode *cur = que.front();
         que.pop();
-        ret.emplace_back(cur->val);
+        if (cur != RedBlackTree::nil) ret.emplace_back(cur->val);
 
         if (cur->left) que.push(cur->left);
         if (cur->right) que.push(cur->right);
+    }
+    cout << ret;
+}
+
+void RedBlackTree::in_order() {
+    if (!root) return;
+    vector<int> ret;
+    stack<RBTreeNode *> st;
+    auto cur = root;
+    while (!st.empty() || cur) {
+        if (cur) {
+            st.push(cur);
+            cur = cur->left;
+        } else {
+            cur = st.top();
+            st.pop();
+            if (cur != RedBlackTree::nil) ret.emplace_back(cur->val);
+            cur = cur->right;
+        }
     }
     cout << ret;
 }
@@ -81,25 +100,6 @@ void RedBlackTree::print_tree(bool iscolor, bool show_nil) {
         for (auto &s : ans[i]) cout << s;
         cout << endl;
     }
-}
-
-void RedBlackTree::in_order() {
-    if (!root) return;
-    vector<int> ret;
-    stack<RBTreeNode *> st;
-    auto cur = root;
-    while (!st.empty() || cur) {
-        if (cur) {
-            st.push(cur);
-            cur = cur->left;
-        } else {
-            cur = st.top();
-            st.pop();
-            ret.emplace_back(cur->val);
-            cur = cur->right;
-        }
-    }
-    cout << ret;
 }
 
 RBTreeNode *RedBlackTree::maximum(RBTreeNode *x) {
@@ -245,65 +245,6 @@ void RedBlackTree::insert(int item) {
     insert_fixup(z); // 只比BST多了这一步
 }
 
-void RedBlackTree::remove_1(RBTreeNode *node) {
-    // case 1: 无子树
-    if (!node->left && !node->right) {
-        auto parent = node->parent;
-        if (!parent) {
-            delete root;
-            root = nullptr;
-            return;
-        }
-        if (node == parent->left) {
-            delete parent->left;
-            parent->left = nullptr;
-            return;
-        } else if (node == parent->right) {
-            delete parent->right;
-            parent->right = nullptr;
-            return;
-        }
-    }
-    // case 2: 只有左子树
-    if (node->left && !node->right) {
-        auto cur = node->left;
-        auto val = cur->val;
-        node->left = cur->left;
-        node->right = cur->right;
-        node->val = val;
-        // 修正parent
-        if (node->left) node->left->parent = node;
-        if (node->right) node->right->parent = node;
-        // 删除cur
-        delete cur;
-        cur = nullptr;
-        return;
-    }
-    // case 3: 只有右子树
-    if (!node->left && node->right) {
-        auto cur = node->right;
-        auto val = cur->val;
-        node->left = cur->left;
-        node->right = cur->right;
-        node->val = val;
-        // 修正parent
-        if (node->left) node->left->parent = node;
-        if (node->right) node->right->parent = node;
-        // 删除cur
-        delete cur;
-        cur = nullptr;
-        return;
-    }
-    // case 4: 左右子树都存在且不为空
-    if (node->left && node->right) {
-        auto pre = node->left;
-        while (pre->right) pre = pre->right;
-        node->val = pre->val;
-        // 递归, 最后一定能删除到前面三种情况, 此时结束递归
-        remove(pre);
-    }
-}
-
 void RedBlackTree::transplant(RBTreeNode *u, RBTreeNode *v) {
     // 用以v为根的子树替换以u为根的子树
     if (u->parent == RedBlackTree::nil)
@@ -331,7 +272,6 @@ void RedBlackTree::delete_fixup(RBTreeNode *x) {
             if (w->left->color && w->right->color) {
                 w->color = false;
                 x = x->parent;
-                continue;
             } else if (w->right->color) {
                 w->left->color = true;
                 w->color = false;
@@ -355,7 +295,6 @@ void RedBlackTree::delete_fixup(RBTreeNode *x) {
             if (w->right->color && w->left->color) {
                 w->color = false;
                 x = x->parent;
-                continue;
             } else if (w->left->color) {
                 w->right->color = true;
                 w->color = false;
@@ -373,7 +312,7 @@ void RedBlackTree::delete_fixup(RBTreeNode *x) {
 }
 
 void RedBlackTree::remove(RBTreeNode *z) {
-    RBTreeNode *x{};
+    RBTreeNode *x{}; // 用于记录执行fixup的节点
     bool y_origin_color = z->color;
     if (z->left == RedBlackTree::nil) { // 没有左子树, 右子树可有可无
         x = z->right;
@@ -457,17 +396,18 @@ void t0() {
     vector<int> nodes{2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20};
     for (int i : nodes) {
         tree.insert(i);
-        tree.print_tree(false, true);
+        /* tree.print_tree(false, true); */
     }
 
-    /* tree.breadth_travel(); */
-    cout << "RBT is: \n";
-    /* tree.in_order(); */
+    cout << "breadth_travel is: \n";
+    tree.breadth_travel();
+    cout << "inorder is: \n";
+    tree.in_order();
     tree.print_tree(true, true);
 }
 
 int main(int argc, char const *argv[]) {
-    /* t0(); */
-    t1();
+    t0();
+    /* t1(); */
     return 0;
 }

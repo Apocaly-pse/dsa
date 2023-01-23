@@ -19,7 +19,7 @@ void BinarySearchTree::build_from_array(vector<int> &items) {
     // 有序数组构建二叉搜索树
     sort(items.begin(), items.end());
     function<BSTreeNode *(int, int)> f = [&](int l, int r) {
-        if (l > r) return (BSTreeNode *)nullptr;
+        if (l > r) return static_cast<BSTreeNode *>(nullptr);
         int mid = l + (r - l) / 2;
         return new BSTreeNode(items[mid], f(l, mid - 1), f(mid + 1, r));
     };
@@ -104,7 +104,7 @@ void BinarySearchTree::print_tree() {
         for (auto i = 0; i < bqs; i++) {
             auto &[r, c, cur, slash] = bq.front();
             bq.pop();
-            if (!cur) continue;
+            /* if (!cur) continue; */
             ans[r][c] = to_string(cur->val);
             if (r == m - 1) {
                 branch[r][c] = slash;
@@ -281,7 +281,7 @@ void BinarySearchTree::remove_1(BSTreeNode *node) {
         while (pre->right) pre = pre->right;
         node->val = pre->val;
         // 递归, 最后一定能删除到前面三种情况, 此时结束递归
-        remove(pre);
+        remove_1(pre);
     }
 }
 
@@ -331,15 +331,16 @@ void t1() {
     /* for (int i : nodes) tree.insert(i); */
     for (int i : nodes) {
         tree.insert(i);
-        tree.print_tree();
+        /* tree.print_tree(); */
     }
 
     /* cout << "breadth_travel: \n"; */
     tree.print_tree();
     /* tree.breadth_travel(); */
-    int node1{15};
+    int node1{6};
     cout << "delete node: " << node1 << endl;
-    tree.remove(tree.search(node1));
+    tree.remove_1(tree.search(node1));
+    /* tree.remove(tree.search(node1)); */
     /* tree.remove(tree.search(4)); */
     /* tree.remove(tree.search(3)); */
     tree.print_tree();
