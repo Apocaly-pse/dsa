@@ -57,10 +57,11 @@ void InsertionSort3(vector<int> &arr) {
 
 void InsertionSort(vector<int> &arr) {
     int n = arr.size();
-    for (int i = 1; i < n; ++i) {
-        int tmp = arr[i], j = i;
-        for (; j >= 0 && arr[j - 1] > tmp; --j) arr[j] = arr[j - 1];
-        arr[j] = tmp;
+    for (int i{1}; i < n; ++i) {
+        int key = arr[i], j = i - 1;
+        /* while (j >= 0 && arr[j] > key) arr[j + 1] = arr[j], --j; */
+        for (; j >= 0 && arr[j] > key; --j) arr[j + 1] = arr[j];
+        arr[j + 1] = key;
     }
 }
 

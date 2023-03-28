@@ -104,13 +104,13 @@ void QuickSort(vector<int> &arr) {
     int l{}, r = arr.size() - 1;
     // with STL: stack
     stack<pair<int, int>> st;
-    st.push(make_pair(l, r));
+    st.push({l, r});
     while (!st.empty()) {
         tie(l, r) = st.top();
         st.pop();
         int p = Partition(arr, l, r);
-        if (p - 1 > l) st.push(make_pair(l, p - 1));
-        if (p + 1 < r) st.push(make_pair(p + 1, r));
+        if (p - 1 > l) st.push({l, p - 1});
+        if (p + 1 < r) st.push({p + 1, r});
     }
 }
 
@@ -137,11 +137,11 @@ void t1() {
     // 输出原始数组
     // printArray(arr);
     // 进行快速排序
-    // QuickSort2(arr);
+    QuickSort(arr);
     cout << "sorting...\n";
-    QuickSort1(arr, 0, arr.size() - 1);
+    /* QuickSort1(arr, 0, arr.size() - 1); */
     // 输出排序后的数组
-    // printArray(arr);
+    /* printArray(arr); */
     auto end = system_clock::now();
     auto duration = duration_cast<microseconds>(end - start);
     cout << "Time spent: "

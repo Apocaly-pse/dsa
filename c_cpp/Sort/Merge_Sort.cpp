@@ -46,7 +46,11 @@ void merge(vector<int> &arr, int L, int M, int R) {
     // 如果右侧没全部放入则依次全部放入
     while (p2 <= R) a[i++] = arr[p2++];
     // 将排序好后的数组复制到原数组
-    for (i = 0; i < R - L + 1; i++) arr[L + i] = a[i];
+    /* for (i = 0; i < R - L + 1; i++) arr[L + i] = a[i]; */
+    // 使用STL算法函数来操作
+    std::copy(a.begin(), a.begin() + R - L + 1, arr.begin() + L);
+
+    printArray(arr);
 }
 
 void MergeSort1(vector<int> &arr, int L, int R) {

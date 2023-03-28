@@ -32,12 +32,20 @@ int find_3max(vector<int> &v) {
             mmmx = i;
     return mmmx;
 }
-
-
-int main(int argc, char *argv[]) {
+void t1() {
     vector<int> v = {3, 2, 5, 4, 1, 6, 9};
     cout << find_max(v) << endl;
     cout << find_2max(v) << endl;
     cout << find_3max(v) << endl;
+}
+void t2() {
+    int a = 10, b = 11;
+    cout << my_max(a, b) << endl;
+    cout << my_min(a, b) << endl;
+}
+
+int main(int argc, char *argv[]) {
+    // t1();
+    t2();
     return 0;
 }

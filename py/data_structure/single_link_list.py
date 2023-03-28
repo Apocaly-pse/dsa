@@ -7,7 +7,7 @@
 
 class Node(object):
     # 结点类，用于保存上一节点的信息
-    def __init__(self, elem):
+    def __init__(self, elem=0):
         self.elem = elem
         self.next = None
 
@@ -29,7 +29,7 @@ class SingleLinkList(object):
         cur = self.__head
         # count 用于计数
         count = 0
-        while cur:
+        while cur is not None:
             count += 1
             # 向后移动
             cur = cur.next
@@ -107,8 +107,7 @@ class SingleLinkList(object):
         while cur:
             if cur.elem == item:
                 return True
-            else:
-                cur = cur.next
+            cur = cur.next
         return False
 
 

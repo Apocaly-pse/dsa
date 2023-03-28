@@ -1,5 +1,5 @@
-#ifndef Linked_List
-#define Linked_List
+#ifndef Single_Linked_List
+#define Single_Linked_List
 #include <iostream>
 #include <vector>
 
@@ -16,13 +16,13 @@ struct ListNode {
 
 ostream& operator<<(ostream& os, ListNode* lp);
 
-class LinkedList {
+class SingleLinkedList {
 public:
-    LinkedList() : head(nullptr) {}
-    LinkedList(int head_val) : head(new ListNode(head_val)) {}
-    LinkedList(int head_val, vector<int> rest);
-    LinkedList(vector<int> nodes);
-    ~LinkedList();
+    SingleLinkedList() : head(nullptr) {}
+    SingleLinkedList(int head_val) : head(new ListNode(head_val)) {}
+    SingleLinkedList(int head_val, vector<int> rest);
+    SingleLinkedList(vector<int> nodes);
+    ~SingleLinkedList();
 
     void print();
     ListNode* first();
@@ -66,7 +66,7 @@ ostream& operator<<(ostream& os, ListNode* lp) {
 }
 
 
-LinkedList::LinkedList(int head_val, vector<int> rest) {
+SingleLinkedList::SingleLinkedList(int head_val, vector<int> rest) {
     head = new ListNode(head_val);
     auto cur = head;
     for (auto i : rest) {
@@ -75,7 +75,7 @@ LinkedList::LinkedList(int head_val, vector<int> rest) {
     }
 }
 
-LinkedList::LinkedList(vector<int> nodes) {
+SingleLinkedList::SingleLinkedList(vector<int> nodes) {
     if (nodes.empty()) return;
     head = new ListNode(nodes[0]);
     auto cur = head;
@@ -85,7 +85,7 @@ LinkedList::LinkedList(vector<int> nodes) {
     }
 }
 
-LinkedList::~LinkedList() {
+SingleLinkedList::~SingleLinkedList() {
     ListNode* cur;
     while (head->next) {
         cur = head->next;
@@ -95,17 +95,17 @@ LinkedList::~LinkedList() {
     delete head;
 }
 
-void LinkedList::print() { cout << head; }
+void SingleLinkedList::print() { cout << head; }
 
-ListNode* LinkedList::first() { return head; }
+ListNode* SingleLinkedList::first() { return head; }
 
-ListNode* LinkedList::last() {
+ListNode* SingleLinkedList::last() {
     auto cur = head;
     while (cur->next) cur = cur->next;
     return cur;
 }
 
-int LinkedList::len() {
+int SingleLinkedList::len() {
     int size = 0;
     auto cur = head;
     while (cur) {
@@ -115,9 +115,9 @@ int LinkedList::len() {
     return size;
 }
 
-/* int& LinkedList::operator[](int pos) { */
+/* int& SingleLinkedList::operator[](int pos) { */
 /*     if (head == nullptr) { */
-/*         cerr << "Attempt to get value from a NULL LinkedList\n"; */
+/*         cerr << "Attempt to get value from a NULL SingleLinkedList\n"; */
 /*         exit(1); */
 /*     } */
 /*     if (pos > len() - 1 || pos < 0) { */
@@ -129,9 +129,9 @@ int LinkedList::len() {
 /*     return cur->val; */
 /* } */
 
-ListNode* LinkedList::operator[](int pos) {
+ListNode* SingleLinkedList::operator[](int pos) {
     if (head == nullptr) {
-        cerr << "Attempt to get value from a NULL LinkedList\n";
+        cerr << "Attempt to get value from a NULL SingleLinkedList\n";
         exit(1);
     }
     if (pos > len() - 1 || pos < 0) {
@@ -143,22 +143,10 @@ ListNode* LinkedList::operator[](int pos) {
     return cur;
 }
 
-ListNode* LinkedList::visit(int pos) {
-    if (head == nullptr) {
-        cerr << "Attempt to get value from a NULL LinkedList\n";
-        exit(1);
-    }
-    if (pos > len() - 1 || pos < 0) {
-        cerr << "Wrong pos!\n";
-        exit(1);
-    }
-    auto cur = head;
-    while (pos--) cur = cur->next;
-    return cur;
-}
+ListNode* SingleLinkedList::visit(int pos) { return operator[](pos); }
 
 
-void LinkedList::insert(int pos, int val) {
+void SingleLinkedList::insert(int pos, int val) {
     if (pos >= len()) {
         auto cur = last();
         cur->next = new ListNode(val);
@@ -168,21 +156,21 @@ void LinkedList::insert(int pos, int val) {
         head->next = cur;
     } else {
         auto pre = head;
-        while (--pos) {
-            pre = pre->next;
-        }
+        while (--pos) pre = pre->next;
+
         auto cur = pre->next;
         pre->next = new ListNode(val, cur);
     }
 }
 
-void LinkedList::add2head(int val) { insert(0, val); }
-void LinkedList::append(int val) { insert(len(), val); }
+void SingleLinkedList::add2head(int val) { insert(0, val); }
+void SingleLinkedList::append(int val) { insert(len(), val); }
 
-void LinkedList::pop(int pos) {
+void SingleLinkedList::pop(int pos) {
     if (head == nullptr) {
-        cout << "Attempt to delete a NULL LinkedList!" << endl;
+        cout << "Attempt to delete a NULL SingleLinkedList!" << endl;
     } else if (head->next == nullptr) {
+        delete head;
         head = nullptr;
     } else {
         if (pos >= len() - 1) {
@@ -200,10 +188,10 @@ void LinkedList::pop(int pos) {
         }
     }
 }
-void LinkedList::pop_front() { pop(0); }
-void LinkedList::pop_back() { pop(len()); }
+void SingleLinkedList::pop_front() { pop(0); }
+void SingleLinkedList::pop_back() { pop(len()); }
 
-int LinkedList::find(int node) {
+int SingleLinkedList::find(int node) {
     if (head == nullptr) return -1;
     auto cur = head;
     int pos{};
@@ -215,7 +203,7 @@ int LinkedList::find(int node) {
     return -1;
 }
 
-void LinkedList::remove(int val, int cnt) {
+void SingleLinkedList::remove(int val, int cnt) {
     int idx;
     do {
         if ((idx = find(val)) == -1) {
@@ -227,7 +215,7 @@ void LinkedList::remove(int val, int cnt) {
 }
 
 // modify val->node cnt times
-void LinkedList::modify(int val, int node, int cnt) {
+void SingleLinkedList::modify(int val, int node, int cnt) {
     int idx;
     do {
         if ((idx = find(val)) == -1) {
@@ -239,4 +227,4 @@ void LinkedList::modify(int val, int node, int cnt) {
         }
     } while (--cnt);
 }
-#endif // !LinkedList
+#endif // !SingleLinkedList

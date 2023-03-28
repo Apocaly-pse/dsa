@@ -11,7 +11,7 @@ SOLUTIONTYPE g_numsolutions = 0;
 
 void printable(int boardsize, int* aQueenBitRes, SOLUTIONTYPE numSolution) {
     int i, j, k, row;
-    //计算半数解
+    // 计算半数解
     for (k = 0; k < 2; ++k) {
         printf("*** Solution #: %lu ***\n", 2 * numSolution + k - 1);
         for (i = 0; i < boardsize; i++) {
@@ -128,11 +128,11 @@ void printResults(time_t* pt1, time_t* pt2) {
 int main(int argc, char const* argv[]) {
     time_t t1, t2;
     int boardsize;
-    if (argc != 2) {
-        printf("Usage: nq <width of board> \n");
-        return 0;
-    }
-    boardsize = atoi(argv[1]);
+    // if (argc != 2) {
+    //     printf("Usage: nq <width of board> \n");
+    //     return 0;
+    // }
+    boardsize = 8;
     if (MIN_BOARDSIZE > boardsize || MAX_BOARDSIZE < boardsize) {
         printf("Width of board must be between %d and %d.\n", MIN_BOARDSIZE,
                MAX_BOARDSIZE);

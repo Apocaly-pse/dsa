@@ -349,14 +349,15 @@ void t1() {
     /* vector<int> nodes{2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20}; */
     vector<int> nodes{15, 6, 18, 3, 7, 17, 20, 2, 4, 13, 9};
 
-    /* vector<int> nodes{3, 1, 2}; */
+    /* vector<int> nodes{3,  7,  10, 12, 14, 15, 16, 17, 19, 20, */
+    /*                   21, 23, 26, 28, 30, 35, 38, 39, 41, 47}; */
     for (int i : nodes) {
         tree.insert(i);
         /* tree.print_tree(); */
     }
 
     tree.print_tree();
-    int node1{15};
+    int node1{3};
     cout << "delete node: " << node1 << endl;
     tree.remove(tree.search(node1));
     /* tree.remove(tree.search(4)); */
@@ -407,7 +408,7 @@ void t0() {
 }
 
 int main(int argc, char const *argv[]) {
-    t0();
-    /* t1(); */
+    /* t0(); */
+    t1();
     return 0;
 }
